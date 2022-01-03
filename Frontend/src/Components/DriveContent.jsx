@@ -1,9 +1,14 @@
 import './DriveContent.css'
+
 import DriveFolderBox from './FolderBox';
+import DataContext from './DataContext';
+import { useContext } from 'react';
 function DriveContent() {
+  let driveData = useContext(DataContext);
+
   return (
     <>
-      <div class='content-container'>
+      <div class='content-container' onClick={driveData.FileMenuOptionToggle}>
         <div class='path-container'>
           <div class='rootBox-contianer'>
             <div class='rootBox' id='root'>
@@ -14,8 +19,8 @@ function DriveContent() {
         </div>
         <div class='folder-container'>
           <div class='folder-navigation'>Folder</div>
-      <div class='inner-folder-container'>
-       <DriveFolderBox/>
+          <div class='inner-folder-container'>
+            <DriveFolderBox />
           </div>
         </div>
       </div>
