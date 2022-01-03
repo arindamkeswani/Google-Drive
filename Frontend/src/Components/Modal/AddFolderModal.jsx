@@ -16,21 +16,21 @@ function AddFolderModal() {
              id='createFolderInput'
              type='text'
              placeholder='Add Folder Name'
-             onfocus='this.select()'
+             onFocus='this.select()'
            />
          </div>
          <div class='cancel_confirm-box'>
            <div
              class='cancel-btn'
              id='canceladdFolderModal'
-             onClick={dataDrive.createFolderModalToggle}
+             onClick={dataDrive.closeCreateFolderModal}
            >
              Cancel
            </div>
            <div
              class='confirm-btn'
              id='createFolderBtn'
-             onClick={dataDrive.createFolderModalToggle}
+             onClick={dataDrive.closeCreateFolderModal}
            >
              OK
            </div>

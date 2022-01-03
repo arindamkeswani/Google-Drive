@@ -22,7 +22,7 @@ function DriveHeader() {
               <span class='material-icons-outlined'> close </span>
             </div>
           </div>
-          <button id='createBtn' onClick={driveData.FileMenuOptionToggle}>
+          <button id='createBtn' onClick={driveData.fileMenuToggleFn}>
             <span class='material-icons-outlined'>add</span>
           </button>
           {driveData.fileMenuToggle ? <FileMenu /> : ''}

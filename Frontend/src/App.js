@@ -6,14 +6,21 @@ function App() {
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
 
-  let createFolderModalToggle = () => {
-    setFileMenuToggle(false);
-      setCreateFolderModal(!createFolderModal);
-    console.log("dfcgvhnbjbhgfvds");
+  let openCreateFolderModal = () => {
+    setCreateFolderModal(true);
+    // closeFileMenu();
   };
 
-  let FileMenuOptionToggle = () => {
+  let closeCreateFolderModal = () => {
+    setCreateFolderModal(false);
+  }
+
+  let fileMenuToggleFn = () => {
     setFileMenuToggle(!fileMenuToggle);
+  };
+
+  let closeFileMenu = () => {
+    setFileMenuToggle(false);
   };
 
   return (
@@ -21,9 +28,11 @@ function App() {
       <DataContext.Provider
         value={{
           fileMenuToggle,
-          FileMenuOptionToggle,
+          fileMenuToggleFn,
+          closeFileMenu,
           createFolderModal,
-          createFolderModalToggle,
+          openCreateFolderModal,
+          closeCreateFolderModal,
         }}
       >
         <DriveBody />

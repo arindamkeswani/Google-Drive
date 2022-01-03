@@ -13,7 +13,7 @@ function FileMenu() {
         <div
           class='menu-single-box menu-createFolderBtn'
           onClick={() => {
-            driveData.createFolderModalToggle();
+            driveData.openCreateFolderModal();
           }}
         >
           <div class='menuIcon'>

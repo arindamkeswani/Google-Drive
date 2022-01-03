@@ -8,7 +8,7 @@ function DriveContent() {
 
   return (
     <>
-      <div class='content-container' onClick={driveData.FileMenuOptionToggle}>
+      <div class='content-container' onClick={driveData.closeFileMenu}>
         <div class='path-container'>
           <div class='rootBox-contianer'>
             <div class='rootBox' id='root'>
