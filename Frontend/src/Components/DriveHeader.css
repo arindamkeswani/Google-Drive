@@ -1,0 +1,109 @@
+.header-container {
+  height: 4rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.searchBox_and_addBox_container {
+  height: 85%;
+  width: 45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  /* border: 2px solid red; */
+}
+
+.searchBox {
+  height: 90%;
+  width: 75%;
+  background-color: #f1f3f4;
+  border-radius: 0.5rem;
+  display: flex;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+.searchBox:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.searchIcon {
+  height: 100%;
+  width: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchIcon span {
+  font-size: 1.4rem;
+  color: #5f6368;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.searchBox span:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.inputBox {
+  height: 100%;
+  width: calc(100% - 3rem);
+}
+
+.inputBox input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 1.1rem;
+}
+
+.inputBox input::placeholder {
+  color: #b0b1b2;
+}
+
+.cancelBox {
+  height: 100%;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancelBox span {
+  font-size: 1.4rem;
+  color: #5f6368;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cancelBox span:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+#createBtn {
+  height: 85%;
+  width: 3rem;
+  border: none;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #707478;
+}

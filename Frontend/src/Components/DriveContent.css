@@ -1,0 +1,79 @@
+
+.content-container {
+  height: calc(100% - 4rem);
+  width: 100%;
+  padding: 0.5rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+}
+
+/* Path Contianer css Start */
+.path-container {
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid #dadce0;
+  border-top: 1px solid #dadce0;
+}
+
+.rootBox-contianer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rootBox-contianer span {
+  color: #818181;
+}
+
+.rootBox {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  border-radius: 0.4rem;
+  color: #484c4e;
+}
+.rootBox:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.folder-container {
+  height: calc(100% - 3rem);
+  width: 100%;
+  font-family: sans-serif;
+  border-radius: 0.4rem;
+  color: #5f6368;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.folder-navigation {
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.inner-folder-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  /* justify-content: center; */
+  /* align-items: center; */
+  gap: 1.5rem;
+}
