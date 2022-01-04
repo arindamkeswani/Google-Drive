@@ -37,13 +37,13 @@
   background-color: rgba(60, 64, 67, 0.08);
   border-radius: 50%;
 }
-.folderIcon {
+.fileIcon {
   height: calc(100% - 3.8rem);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.folderIcon span {
+.fileIcon span {
   font-size: 4rem;
   color: #4285f4;
 }

@@ -30,7 +30,7 @@ function DocFileBox(props) {
             </span>
           </div>
         </div>
-        <div class='folderIcon'>
+        <div class='fileIcon'>
           <span class='material-icons'> description </span>
         </div>
         <div class='folderName'>{fileData.file_name}</div>
