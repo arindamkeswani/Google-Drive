@@ -52,24 +52,42 @@ exports.save = (req, res) => {
         if (err)
             throw err; //not connected
 
-        const uid =  new ShortUniqueId()
-        console.log(uid());
-        console.log('Connected as ID (data controller Save in DB ): ', connection.threadId);
-        console.log(req.body.parent_folder);
-        console.log(req.body.folder_name);
-        // timestamp = moment().format('YYYY:MM:DD:hh:mm:ss a');
+        const uid = new ShortUniqueId()
+        // console.log(uid());
+        // console.log('Connected as ID (data controller Save in DB): ', connection.threadId);
+
+        parent_folder = req.body.parent_folder;
         timestamp = Date.now()
-        console.log(timestamp);
-        unique_id=uid()
-        if(req.body.folder_name){
-            connection.query('INSERT INTO folders (id, user_id, folder_name, parent_folder, creation_date) VALUES (?,?,?,?,?);', [unique_id, 1, req.body.folder_name, req.body.parent_folder, timestamp], (err, rows) => {
-                
+        unique_id = uid()
+
+        if (req.body.folder_name) {
+            connection.query('INSERT INTO folders (id, user_id, folder_name, parent_folder, creation_date) VALUES (?,?,?,?,?);', [unique_id, 1, req.body.folder_name, parent_folder, timestamp], (err, rows) => {
+                connection.release();
             })
         }
-        else if(req.body.file_name){
-            connection.query('INSERT INTO notepads (CustomerName, ContactName, Address, City, PostalCode, Country) VALUES ();', [parent_folder, parent_folder], (err, rows) => {
-    
-            })
+        else if (req.body.file_name) {
+            if (req.body.ext == ".txt") {
+
+                fileName = req.body.file_name;
+                // console.log(fileName);
+                fontSize = req.body.font_size;
+                // console.log(fontSize);
+                fontfamily = req.body.font_family;
+                // console.log(fontfamily);
+                isBold = req.body.is_bold;
+                // console.log(isBold);
+                isItalic = req.body.is_italic;
+                // console.log(isItalic);
+                content = req.body.content;
+                // console.log(content);
+
+                connection.query('INSERT INTO notepads (id, user_id, file_name, font_size, font_family, bold, italic, content, parent_folder,creation_date) VALUES (?,?,?,?,?,?,?,?,?,?);', [unique_id, 1, fileName, fontSize, fontfamily, isBold, isItalic, content, parent_folder, timestamp], (err, rows) => {
+                    if (err)
+                        throw err; //not connected
+
+                    connection.release();
+                })
+            }
         }
     })
 }

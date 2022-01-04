@@ -1,26 +1,46 @@
 import React, { useContext, useState } from 'react';
 import DataContext from '../DataContext';
+import axios from 'axios';
 import './NotePad.css';
 
 function NotePad() {
   let driveData = useContext(DataContext);
 
-  let [font, setFont] = useState('sans-serif');
+  let [fontFamily, setFont] = useState('sans-serif');
   let [fontSize, setFontSize] = useState(18);
   let [isBold, setIsBold] = useState(false);
   let [isItalic, setIsItalic] = useState(false);
   let [content, setContent] = useState('');
-  let [folderName, setFolderName] = useState('');
+  let [fileName, setFolderName] = useState('');
+  const [dummyState, setDummyState] = useState(true)
+
+
+  let createNotepad = async ()=>{
+    // console.log(content);
+    // await changeContent();
+    await axios.post('http://localhost:5000/', {
+      parent_folder: driveData.currentBreadcrumbID,
+      file_name:fileName,
+      content: content,
+      font_family:fontFamily,
+      font_size:fontSize,
+      is_bold:isBold,
+      is_italic:isItalic,
+      ext:".txt"
+     });
+
+  }
+
 
   let myContentRef = new React.createRef();
   let changeFont = (currentFont) => {
     setFont(currentFont);
-    console.log(font);
+    // console.log(font);
   };
 
   let increaseFont = () => {
     setFontSize(fontSize + 3);
-    console.log(fontSize);
+    // console.log(fontSize);
   };
 
   let decreaseFont = () => {
@@ -30,26 +50,26 @@ function NotePad() {
 
   let set_np_file_name = (currentFileName) => {
     setFolderName(currentFileName);
-    console.log(folderName);
+    // console.log(folderName);
   };
 
   let toggleBold = () => {
     setIsBold(!isBold);
-    console.log(isBold);
+    // console.log(isBold);
   };
 
   let toggleItalic = () => {
     setIsItalic(!isItalic);
-    console.log(isItalic);
+    // console.log(isItalic);
   };
 
-  let changeContent = () => {
-    let textareaValue = myContentRef.current.value;
-    setContent(textareaValue);
-    console.log(textareaValue);
-  };
+  // let changeContent = () => {
+  //   let textareaValue = myContentRef.current.value;
+  //   setContent(textareaValue);
+  //   console.log(textareaValue);
+  // };
 
-  let createNotepad = () => {};
+  
 
   return (
     <>
@@ -105,8 +125,9 @@ function NotePad() {
                 <div
                   class='doc-saveButton'
                   onClick={() => {
-                    changeContent();
+                    // changeContent();
                     createNotepad();
+                    driveData.NotepadToggle();
                   }}
                 >
                   Save
@@ -176,9 +197,10 @@ function NotePad() {
               fontSize: `${fontSize}px`,
               fontWeight: isBold ? 'bold' : '',
               fontStyle: isItalic ? 'italic' : '',
-              fontFamily: `${font}`,
+              fontFamily: `${fontFamily}`,
             }}
             ref={myContentRef}
+            onChange={(event)=>setContent(event.target.value)}
           ></textarea>
         </div>
       </div>

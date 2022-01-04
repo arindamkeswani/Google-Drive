@@ -40,6 +40,7 @@ console.log(notePadSaveToggle);
   let NotepadToggle = () => {
     setNotePad(!notePad);
     closeFileMenu();
+    setDummyState(!dummyState)
   };
 
   let openCreateFolderModal = () => {
@@ -74,7 +75,7 @@ console.log(notePadSaveToggle);
     let data = await sortIt(pageData);
 
     data = data.sort(function (a, b) {
-      console.log(b.creation_date -  a.creation_date);
+      // console.log(b.creation_date -  a.creation_date);
       return b.creation_date - a.creation_date;
     });
 
