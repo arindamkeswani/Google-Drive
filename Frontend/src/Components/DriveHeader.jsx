@@ -2,7 +2,6 @@ import './DriveHeader.css';
 
 import { useContext } from 'react';
 import DataContext from './DataContext';
-import FileMenu from './Modal/FileMenu';
 // import FileMenu from './Modal/FileMenu';
 
 function DriveHeader() {
@@ -25,7 +24,6 @@ function DriveHeader() {
           <button id='createBtn' onClick={driveData.fileMenuToggleFn}>
             <span class='material-icons-outlined'>add</span>
           </button>
-          {driveData.fileMenuToggle ? <FileMenu /> : ''}
         </div>
       </div>
     </>

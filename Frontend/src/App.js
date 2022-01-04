@@ -5,18 +5,25 @@ import DriveBody from './Components/DriveBody.jsx';
 function App() {
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
+  const [notePad, setNotePad] = useState(false);
+
+  let NotepadToogle = () => {
+    setNotePad(!notePad);
+     closeFileMenu();
+  };
+
 
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
-    // closeFileMenu();
+     closeFileMenu();
   };
 
   let closeCreateFolderModal = () => {
     setCreateFolderModal(false);
-  }
+  };
 
   let fileMenuToggleFn = () => {
-    setFileMenuToggle(!fileMenuToggle);
+    setFileMenuToggle(true);
   };
 
   let closeFileMenu = () => {
@@ -33,6 +40,8 @@ function App() {
           createFolderModal,
           openCreateFolderModal,
           closeCreateFolderModal,
+          notePad,
+          NotepadToogle,
         }}
       >
         <DriveBody />

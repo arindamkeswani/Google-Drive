@@ -1,10 +1,6 @@
 import { useContext } from 'react';
 import DataContext from '../DataContext';
-import '../Modal/FileMenu.css'
-import AddFolderModal from './AddFolderModal';
-
-
-
+import '../Modal/FileMenu.css';
 function FileMenu() {
   let driveData = useContext(DataContext);
   return (
@@ -21,9 +17,8 @@ function FileMenu() {
           </div>
           <div class='menuFile-Name'>Folder</div>
         </div>
-
         <div class='multiple-single-box'>
-          <div class='menu-multiple-box'>
+          <div class='menu-multiple-box' onClick={driveData.NotepadToogle}>
             <div class='menuIcon'>
               <span class='material-icons googleDocsIcon'> description </span>
             </div>
@@ -37,7 +32,6 @@ function FileMenu() {
           </div>
         </div>
       </div>
-      {driveData.createFolderModal ? <AddFolderModal /> : ''}
     </>
   );
 }
