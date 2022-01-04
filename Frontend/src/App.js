@@ -7,6 +7,13 @@ function App() {
   const [pageData, setPageData] = useState([])
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
+  const [notePad, setNotePad] = useState(false);
+
+  let NotepadToogle = () => {
+    setNotePad(!notePad);
+     closeFileMenu();
+  };
+
 
   useEffect( () => {
     async function fetchPageData(){
@@ -28,15 +35,15 @@ function App() {
   
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
-    // closeFileMenu();
+     closeFileMenu();
   };
 
   let closeCreateFolderModal = () => {
     setCreateFolderModal(false);
-  }
+  };
 
   let fileMenuToggleFn = () => {
-    setFileMenuToggle(!fileMenuToggle);
+    setFileMenuToggle(true);
   };
 
   let closeFileMenu = () => {
@@ -53,6 +60,8 @@ function App() {
           createFolderModal,
           openCreateFolderModal,
           closeCreateFolderModal,
+          notePad,
+          NotepadToogle,
         }}
       >
         <DriveBody />
