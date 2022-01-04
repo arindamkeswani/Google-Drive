@@ -35,7 +35,8 @@ exports.view = (req, res) => {
 
             if (!err) {
 
-                // result.push(rows)
+                // sort data from queries acc to timestamp
+
                 res.send({
                     query_returned: rows
                 })

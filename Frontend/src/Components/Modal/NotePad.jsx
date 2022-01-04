@@ -23,7 +23,7 @@ function NotePad() {
             </div>
             <div
               class='headerBar-right-iconDivBox close'
-              onClick={driveData.NotepadToogle}
+              onClick={driveData.NotepadToggle}
             >
               <span class='material-icons-outlined cancel'> close </span>
             </div>

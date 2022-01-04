@@ -9,19 +9,13 @@ function App() {
   const [createFolderModal, setCreateFolderModal] = useState(false);
   const [notePad, setNotePad] = useState(false);
 
-  let NotepadToogle = () => {
-    setNotePad(!notePad);
-     closeFileMenu();
-  };
-
-
   useEffect( () => {
     async function fetchPageData(){
       try {
         console.log(1);
         const getData = await axios.get("http://localhost:5000/");
         console.log(getData.data);
-        return data
+        return getData.data
         
       } catch (err) {
         console.log(err);
@@ -31,6 +25,13 @@ function App() {
     let data = fetchPageData()
     setPageData(data);
   },[])
+  
+  let NotepadToggle = () => {
+    setNotePad(!notePad);
+     closeFileMenu();
+  };
+
+
   
   
   let openCreateFolderModal = () => {
@@ -61,7 +62,7 @@ function App() {
           openCreateFolderModal,
           closeCreateFolderModal,
           notePad,
-          NotepadToogle,
+          NotepadToggle,
         }}
       >
         <DriveBody />
