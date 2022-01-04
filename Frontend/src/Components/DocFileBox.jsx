@@ -1,30 +1,37 @@
-
-import { useEffect } from 'react';
-import './DocFileBox.css'
-
+import './DocFileBox.css';
 function DocFileBox(props) {
-
-  useEffect(() => {
-    console.log(props.fileDataInObj)
-  }, []);
-
+  let fileData = props.fileDataInOb;
   return (
-   <>
-    {console.log(props.fileDataInObj)}
-      <div class='folderBox'>
+    <>
+      <div
+        class='folderBox'
+        id={fileData.id}
+        parentFolder={fileData.parent_folder}
+      >
         <div class='editBox'>
-      <div>
-       
-            <span class='material-icons-outlined editIcon'>edit</span>
+          <div>
+            <span
+              class='material-icons-outlined editIcon'
+              id={fileData.id}
+              parentFolder={fileData.parent_folder}
+            >
+              edit
+            </span>
           </div>
           <div>
-            <span class='material-icons-outlined deleteIcon'>close</span>
+            <span
+              class='material-icons-outlined deleteIcon'
+              id={fileData.id}
+              parentFolder={fileData.parent_folder}
+            >
+              close
+            </span>
           </div>
         </div>
         <div class='folderIcon'>
           <span class='material-icons'> description </span>
         </div>
-        <div class='folderName'>Untitled file</div>
+        <div class='folderName'>{fileData.file_name}</div>
       </div>
     </>
   );

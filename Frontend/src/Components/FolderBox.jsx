@@ -1,21 +1,30 @@
 import './FolderBox.css'
-import { useEffect } from 'react';
 
 function Drive_FolderBox(props) {
-  useEffect(() => {
-    console.log(props.folderDataInObj)
-  }, []);
+  let folderData = props.folderDataInObj;
  return (
    <>
-     <div class='folderBox'>
+     <div
+       class='folderBox'
+       id={folderData.id}
+       parentFolder={folderData.parent_folder}
+     >
        <div class='editBox'>
          <div>
-           <span class='material-icons-outlined editIcon' >
+           <span
+             class='material-icons-outlined editIcon'
+             id={folderData.id}
+             parentFolder={folderData.parent_folder}
+           >
              edit
            </span>
          </div>
          <div>
-           <span class='material-icons-outlined deleteIcon' >
+           <span
+             class='material-icons-outlined deleteIcon'
+             id={folderData.id}
+             parentFolder={folderData.parent_folder}
+           >
              close
            </span>
          </div>
@@ -23,7 +32,7 @@ function Drive_FolderBox(props) {
        <div class='folderIcon'>
          <span class='material-icons'> folder </span>
        </div>
-       <div class='folderName'>Untitled</div>
+       <div class='folderName'>{folderData.folder_name}</div>
      </div>
    </>
  );
