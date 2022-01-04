@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import DataContext from '../DataContext';
 import '../Modal/AddFolderModal.css'
 
@@ -6,6 +7,17 @@ import '../Modal/AddFolderModal.css'
 
 function AddFolderModal() {
  let dataDrive = useContext(DataContext);
+  const [folder_input_value,set_folder_input_value] = useState('')
+  
+
+ async function createFolder(){
+
+   await axios.post('http://localhost:5000/', {
+     parent_folder: dataDrive.currentBreadcrumbID,
+     folder_name:folder_input_value
+    });
+ }
+
  return (
    <>
      <div class='modal' id='addFolderModal'>
@@ -16,7 +28,10 @@ function AddFolderModal() {
              id='createFolderInput'
              type='text'
              placeholder='Add Folder Name'
-             onFocus='this.select()'
+            //  onFocus='this.select()'
+             onChange={event=>{
+              set_folder_input_value(event.target.value)
+             }}
            />
          </div>
          <div class='cancel_confirm-box'>
@@ -30,7 +45,7 @@ function AddFolderModal() {
            <div
              class='confirm-btn'
              id='createFolderBtn'
-             onClick={dataDrive.closeCreateFolderModal}
+             onClick={()=>{dataDrive.closeCreateFolderModal(); createFolder()}}
            >
              OK
            </div>

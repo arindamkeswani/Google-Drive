@@ -10,11 +10,15 @@ function App() {
   const [notePad, setNotePad] = useState(false);
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
   const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
-
+  const [dummyState, setDummyState] = useState(true)
   useEffect(async () => {
     async function fetchPageData() {
       try {
-        const getData = await axios.get('http://localhost:5000/');
+        const getData = await axios.get('http://localhost:5000/',{
+          params: {
+            current_folder:currentBreadcrumbID
+          }
+        });
         // console.log(getData.data.query_returned);
         return getData.data.query_returned;
       } catch (err) {
@@ -25,7 +29,7 @@ function App() {
     let data = await fetchPageData();
     let sortedData = await sortPageData(data);
     setPageData(sortedData);
-  }, []);
+  }, [dummyState]);
 
   let notePadSaveBtnToggle = () => {
     console.log(notePadSaveToggle);
@@ -43,6 +47,7 @@ function App() {
 
   let closeCreateFolderModal = () => {
     setCreateFolderModal(false);
+    setDummyState(!dummyState)
   };
 
   let fileMenuToggleFn = () => {
@@ -53,6 +58,7 @@ function App() {
     setFileMenuToggle(false);
   };
 
+  // sort data from queries according to timestamp
   let sortPageData = async (pageData) => {
     async function sortIt(pageData) {
       var rows = [];
@@ -65,7 +71,8 @@ function App() {
     }
     let data = await sortIt(pageData);
 
-    data.sort(function (a, b) {
+    data = data.sort(function (a, b) {
+      console.log(b.creation_date -  a.creation_date);
       return b.creation_date - a.creation_date;
     });
 
