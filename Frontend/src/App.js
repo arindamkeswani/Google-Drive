@@ -47,11 +47,35 @@ function App() {
 
   let fileMenuToggleFn = () => {
     setFileMenuToggle(true);
+    
   };
 
   let closeFileMenu = () => {
     setFileMenuToggle(false);
   };
+
+  let sortPageData = async (pageData) => {
+    
+    
+    async function sortIt(pageData){
+      
+      var rows = [];
+      for (var i = 0; i < pageData.length; i++) {
+        for(var j = 0; j < pageData[i].length; j++){
+          rows.push(pageData[i][j]);
+        }
+      }
+      return rows;
+    }
+    let data = await sortIt(pageData);
+
+    data.sort(function (a, b) {
+      return b.creation_date - a.creation_date ;
+    });
+
+    return await data;
+    
+  }
 
   return (
     <>
@@ -63,10 +87,11 @@ function App() {
           createFolderModal,
           openCreateFolderModal,
           closeCreateFolderModal,
+          notePadSaveBtnToggle,
           notePad,
           NotepadToggle,
-          notePadSaveToggle,
-          notePadSaveBtnToggle,
+          sortPageData,
+          pageData
         }}
       >
         <DriveBody />
