@@ -1,16 +1,17 @@
 const { query } = require('express');
 const mysql = require('mysql');
+const {pool} = require('../app')
 
 //connection pool
-const pool = mysql.createPool({
-    connectionLimit: 100,
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "gdrive",
-    port: 3306,
-    multipleStatements: true
-});
+// const pool = mysql.createPool({
+//     connectionLimit: 100,
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "gdrive",
+//     port: 3306,
+//     multipleStatements: true
+// });
 
 
 //get root data
@@ -30,7 +31,7 @@ exports.view = (req, res) => {
         result = []
         connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?; SELECT * FROM notepads where user_id=1 AND parent_folder=?', [parent_folder, parent_folder], (err, rows) => {
             //When done with the connection, release it
-            // connection.release();
+            connection.release();
 
             if (!err) {
 
@@ -38,7 +39,7 @@ exports.view = (req, res) => {
                 res.send({
                     query_returned: rows
                 })
-                // console.log("Rows in folder:",rows);
+                console.log("Rows in folder:",rows);
             } else {
                 console.log(err);
             }

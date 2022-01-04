@@ -5,7 +5,12 @@ const mysql = require('mysql');
 
 require('dotenv').config();
 
-app.use(cors()) ;
+// app.use(cors()) ;
+app.use(
+    cors({
+      origin: 'http://localhost:3000'
+    })
+  );
 // app.use(express.static('public/build'));
 
 //middleware func-> post, front-> json
@@ -39,6 +44,7 @@ pool.getConnection((err, connection) => {
         throw err; //not connected
     console.log('Connected as ID: ', connection.threadId);
 })
+exports.pool = pool
 
 app.listen(port,function(){
     console.log(`Server listening on port ${port}`); 
