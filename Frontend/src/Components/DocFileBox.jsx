@@ -1,10 +1,16 @@
 
+import { useEffect } from 'react';
 import './DocFileBox.css'
 
 function DocFileBox(props) {
+
+  useEffect(() => {
+    console.log(props.fileDataInObj)
+  }, []);
+
   return (
    <>
-    {console.log(props.folderDataInObj);}
+    {console.log(props.fileDataInObj)}
       <div class='folderBox'>
         <div class='editBox'>
       <div>

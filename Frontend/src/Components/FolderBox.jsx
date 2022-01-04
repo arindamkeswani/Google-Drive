@@ -1,6 +1,10 @@
 import './FolderBox.css'
+import { useEffect } from 'react';
 
-function Drive_FolderBox() {
+function Drive_FolderBox(props) {
+  useEffect(() => {
+    console.log(props.folderDataInObj)
+  }, []);
  return (
    <>
      <div class='folderBox'>

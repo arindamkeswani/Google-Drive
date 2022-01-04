@@ -8,7 +8,7 @@ import DocFileBox from './DocFileBox';
 function DriveContent() {
   let driveData = useContext(DataContext);
   let folderDataArr = driveData.pageData;
-  
+
   return (
     <>
       <div class='content-container' onClick={driveData.closeFileMenu}>
@@ -23,13 +23,14 @@ function DriveContent() {
         <div class='folder-container'>
           <div class='folder-navigation'>Folder</div>
           <div class='inner-folder-container'>
-          
-            {folderDataArr.map((ele)=>{
+            
+
+            {folderDataArr.map((ele) => {
               if (ele.folder_name) {
                 return <DriveFolderBox folderDataInObj={ele} />;
-              }else if(ele.file_name){
-                if(ele.ext==".txt"){
-                  <DocFileBox folderDataInObj={ele} />;
+              } else if (ele.file_name) {
+                if (ele.ext == ".txt") {
+                  return <DocFileBox fileDataInObj={ele} />;
                 }
               }
 
