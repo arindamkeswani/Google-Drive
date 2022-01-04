@@ -3,6 +3,8 @@ import './DriveContent.css'
 import DriveFolderBox from './FolderBox';
 import DataContext from './DataContext';
 import { useContext } from 'react';
+import DocFileBox from './DocFileBox';
+
 function DriveContent() {
   let driveData = useContext(DataContext);
   let folderDataArr = driveData.pageData;
@@ -21,12 +23,13 @@ function DriveContent() {
         <div class='folder-container'>
           <div class='folder-navigation'>Folder</div>
           <div class='inner-folder-container'>
+          
             {folderDataArr.map((ele)=>{
-              if(ele.folder_name){
-                return <DriveFolderBox/>
+              if (ele.folder_name) {
+                return <DriveFolderBox folderDataInObj={ele} />;
               }else if(ele.file_name){
                 if(ele.ext==".txt"){
-                  console.log("b");
+                  <DocFileBox folderDataInObj={ele} />;
                 }
               }
 
