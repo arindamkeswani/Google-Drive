@@ -339,7 +339,7 @@
   height: 2rem;
   width: 4rem;
   background-color: white;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-family: sans-serif;

@@ -4,19 +4,24 @@ import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
 
 function App() {
-  const [pageData, setPageData] = useState([])
+  const [pageData, setPageData] = useState([]);
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
   const [notePad, setNotePad] = useState(false);
+  const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
 
-  useEffect(async () => {
+  let notePadSaveBtnToggle = () => {
+    console.log(notePadSaveToggle);
+    setNotePadSaveToggle(!notePadSaveToggle);
+  };
+
+  useEffect(() => {
     async function fetchPageData() {
       try {
-        
-        const getData = await axios.get("http://localhost:5000/");
-        // console.log(getData.data.query_returned);
-        return getData.data.query_returned
-
+        console.log(1);
+        const getData = await axios.get('http://localhost:5000/');
+        console.log(getData.data);
+        return getData.data;
       } catch (err) {
         console.log(err);
       }
@@ -33,9 +38,6 @@ function App() {
     setNotePad(!notePad);
     closeFileMenu();
   };
-
-
-
 
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
@@ -88,6 +90,7 @@ function App() {
           createFolderModal,
           openCreateFolderModal,
           closeCreateFolderModal,
+          notePadSaveBtnToggle,
           notePad,
           NotepadToggle,
           sortPageData,
