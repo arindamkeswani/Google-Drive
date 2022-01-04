@@ -8,12 +8,13 @@ const pool = mysql.createPool({
     user: "root",
     password: "",
     database: "gdrive",
-    port: 3306
+    port: 3306,
+    multipleStatements: true
 });
 
 
 //get root data
-exports.viewFolders = (req, res) => {
+exports.view = (req, res) => {
     // res.render('home');
 
 
@@ -27,7 +28,7 @@ exports.viewFolders = (req, res) => {
         // use the connection
         parent_folder = "root"
         result = []
-        connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?', [parent_folder], (err, rows) => {
+        connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?; SELECT * FROM notepads where user_id=1 AND parent_folder=?', [parent_folder, parent_folder], (err, rows) => {
             //When done with the connection, release it
             // connection.release();
 
