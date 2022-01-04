@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 import './FolderBox.css'
 
 function Drive_FolderBox(props) {

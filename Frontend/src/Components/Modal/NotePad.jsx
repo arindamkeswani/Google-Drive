@@ -1,9 +1,56 @@
-import { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import DataContext from '../DataContext';
-import  './NotePad.css'
+import './NotePad.css';
 
 function NotePad() {
-  let driveData = useContext(DataContext)
+  let driveData = useContext(DataContext);
+
+  let [font, setFont] = useState('sans-serif');
+  let [fontSize, setFontSize] = useState(18);
+  let [isBold, setIsBold] = useState(false);
+  let [isItalic, setIsItalic] = useState(false);
+  let [content, setContent] = useState('');
+  let [folderName, setFolderName] = useState('');
+
+  let myContentRef = new React.createRef();
+  let changeFont = (currentFont) => {
+    setFont(currentFont);
+    console.log(font);
+  };
+
+  let increaseFont = () => {
+    setFontSize(fontSize + 3);
+    console.log(fontSize);
+  };
+
+  let decreaseFont = () => {
+    setFontSize(fontSize - 3);
+   
+  };
+
+  let set_np_file_name = (currentFileName) => {
+    setFolderName(currentFileName);
+    console.log(folderName);
+  };
+
+  let toggleBold = () => {
+    setIsBold(!isBold);
+    console.log(isBold);
+  };
+
+  let toggleItalic = () => {
+    setIsItalic(!isItalic);
+    console.log(isItalic);
+  };
+
+  let changeContent = () => {
+    let textareaValue = myContentRef.current.value;
+    setContent(textareaValue);
+    console.log(textareaValue);
+  };
+
+  let createNotepad = () => {};
+
   return (
     <>
       <div id='docModal'>
@@ -35,7 +82,13 @@ function NotePad() {
           </div>
           <div class='header_folderName_fileMenu_container'>
             <div class='header_folderName_startBox_container'>
-              <input class='header_folderName' placeholder='Untitled file' />
+              <input
+                class='header_folderName'
+                placeholder='Untitled file'
+                onChange={(e) => {
+                  set_np_file_name(e.target.value);
+                }}
+              />
               <div class='header_star'>
                 <span class='material-icons-outlined'> grade </span>
               </div>
@@ -49,12 +102,20 @@ function NotePad() {
               </div>
 
               {driveData.notePadSaveToggle ? (
-                <div class='doc-saveButton'>Save</div>
+                <div
+                  class='doc-saveButton'
+                  onClick={() => {
+                    changeContent();
+                    createNotepad();
+                  }}
+                >
+                  Save
+                </div>
               ) : (
                 ' '
               )}
 
-              <div class='doc-updateButton'>Save</div>
+              {/* <div class='doc-updateButton'>Save</div> */}
               <div class='fileMenuBox'>Edit</div>
               <div class='fileMenuBox'>View</div>
               <div class='fileMenuBox'>help</div>
@@ -74,7 +135,13 @@ function NotePad() {
         </div>
         <div class='docModalEditOption'>
           <div class='fontSelectOption'>
-            <select name='Font' id='fontOption'>
+            <select
+              name='Font'
+              id='fontOption'
+              onChange={(e) => {
+                changeFont(e.target.value);
+              }}
+            >
               <option value='sans-serif'>sans-serif</option>
               <option value='Times New Roman'>Times New Roman</option>
               <option value='Courier New'>Courier New</option>
@@ -82,28 +149,37 @@ function NotePad() {
           </div>
           <div class='fontSizeContainer'>
             <div class='inner-fontSizeContainer'>
-              <div class='subSize'>
+              <div class='subSize' onClick={decreaseFont}>
                 <span class='material-icons-outlined'> remove </span>
               </div>
-              <div class='textSizeValue'>18</div>
-              <div class='addSize'>
+              <div class='textSizeValue'>{fontSize}</div>
+              <div class='addSize' onClick={increaseFont}>
                 <span class='material-icons-outlined'> add </span>
               </div>
             </div>
           </div>
           <div class='docStyleContainer'>
             <div class='inner-docStyleContainer'>
-              <div class='docStyleBox docBold'>
+              <div class='docStyleBox docBold' onClick={toggleBold}>
                 <span class='material-icons-outlined'> format_bold </span>
               </div>
-              <div class='docStyleBox docItalic'>
+              <div class='docStyleBox docItalic' onClick={toggleItalic}>
                 <span class='material-icons-outlined'> format_italic </span>
               </div>
             </div>
           </div>
         </div>
         <div class='docContentArea'>
-          <textarea id='notepadTextArea'></textarea>
+          <textarea
+            id='notepadTextArea'
+            style={{
+              fontSize: `${fontSize}px`,
+              fontWeight: isBold ? 'bold' : '',
+              fontStyle: isItalic ? 'italic' : '',
+              fontFamily: `${font}`,
+            }}
+            ref={myContentRef}
+          ></textarea>
         </div>
       </div>
     </>

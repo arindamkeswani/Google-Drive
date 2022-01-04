@@ -44,7 +44,8 @@
   align-items: center;
 }
 .folderIcon span {
-  font-size: 5rem;
+  font-size: 4rem;
+  color: #4285f4;
 }
 .folderName {
   height: 2rem;

@@ -11,6 +11,8 @@ function App() {
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
   const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
   const [dummyState, setDummyState] = useState(true)
+
+
   useEffect(async () => {
     async function fetchPageData() {
       try {
@@ -32,7 +34,7 @@ function App() {
   }, [dummyState]);
 
   let notePadSaveBtnToggle = () => {
-    console.log(notePadSaveToggle);
+console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
   };
   let NotepadToggle = () => {
@@ -92,6 +94,7 @@ function App() {
           notePadSaveBtnToggle,
           notePad,
           NotepadToggle,
+          notePadSaveToggle,
           sortPageData,
           currentBreadcrumbID,
           pageData,
