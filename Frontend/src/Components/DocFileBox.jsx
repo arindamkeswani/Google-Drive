@@ -1,19 +1,21 @@
+
 import './DocFileBox.css';
 function DocFileBox(props) {
-  let fileData = props.fileDataInOb;
+  let fileData = props.fileDataInObj;
+
   return (
     <>
-      <div
+       <div
         class='folderBox'
         id={fileData.id}
-        parentFolder={fileData.parent_folder}
+        parent_folder={fileData.parent_folder}
       >
         <div class='editBox'>
           <div>
             <span
               class='material-icons-outlined editIcon'
               id={fileData.id}
-              parentFolder={fileData.parent_folder}
+              parent_folder={fileData.parent_folder}
             >
               edit
             </span>
@@ -22,7 +24,7 @@ function DocFileBox(props) {
             <span
               class='material-icons-outlined deleteIcon'
               id={fileData.id}
-              parentFolder={fileData.parent_folder}
+              parent_folder={fileData.parent_folder}
             >
               close
             </span>
@@ -32,7 +34,7 @@ function DocFileBox(props) {
           <span class='material-icons'> description </span>
         </div>
         <div class='folderName'>{fileData.file_name}</div>
-      </div>
+      </div> 
     </>
   );
 }
