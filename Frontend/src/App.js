@@ -9,34 +9,36 @@ function App() {
   const [createFolderModal, setCreateFolderModal] = useState(false);
   const [notePad, setNotePad] = useState(false);
 
-  useEffect( () => {
-    async function fetchPageData(){
+  useEffect(async () => {
+    async function fetchPageData() {
       try {
-        console.log(1);
-        const getData = await axios.get("http://localhost:5000/");
-        console.log(getData.data);
-        return getData.data
         
+        const getData = await axios.get("http://localhost:5000/");
+        // console.log(getData.data.query_returned);
+        return getData.data.query_returned
+
       } catch (err) {
         console.log(err);
       }
     }
 
-    let data = fetchPageData()
-    setPageData(data);
-  },[])
-  
+    let data = await fetchPageData();
+    setPageData(() => sortPageData(data));
+    
+    
+  }, [])
+
   let NotepadToggle = () => {
     setNotePad(!notePad);
-     closeFileMenu();
+    closeFileMenu();
   };
 
 
-  
-  
+
+
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
-     closeFileMenu();
+    closeFileMenu();
   };
 
   let closeCreateFolderModal = () => {
@@ -45,11 +47,35 @@ function App() {
 
   let fileMenuToggleFn = () => {
     setFileMenuToggle(true);
+    
   };
 
   let closeFileMenu = () => {
     setFileMenuToggle(false);
   };
+
+  let sortPageData = async (pageData) => {
+    
+    
+    async function sortIt(pageData){
+      
+      var rows = [];
+      for (var i = 0; i < pageData.length; i++) {
+        for(var j = 0; j < pageData[i].length; j++){
+          rows.push(pageData[i][j]);
+        }
+      }
+      return rows;
+    }
+    let data = await sortIt(pageData);
+
+    data.sort(function (a, b) {
+      return b.creation_date - a.creation_date ;
+    });
+
+    return await data;
+    
+  }
 
   return (
     <>
@@ -63,6 +89,8 @@ function App() {
           closeCreateFolderModal,
           notePad,
           NotepadToggle,
+          sortPageData,
+          pageData
         }}
       >
         <DriveBody />
