@@ -41,9 +41,20 @@ function NotePad() {
               </div>
             </div>
             <div class='header_FileMenu_container'>
-              <div class='fileMenuBox fileBox'>File</div>
-              <div class='doc-saveButton'>Save</div>
-              <div class='doc-updateButton'>Update</div>
+              <div
+                class='fileMenuBox fileBox'
+                onClick={driveData.notePadSaveBtnToggle}
+              >
+                File
+              </div>
+
+              {driveData.notePadSaveToggle ? (
+                <div class='doc-saveButton'>Save</div>
+              ) : (
+                ' '
+              )}
+
+              <div class='doc-updateButton'>Save</div>
               <div class='fileMenuBox'>Edit</div>
               <div class='fileMenuBox'>View</div>
               <div class='fileMenuBox'>help</div>

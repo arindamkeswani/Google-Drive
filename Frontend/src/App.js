@@ -4,39 +4,41 @@ import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
 
 function App() {
-  const [pageData, setPageData] = useState([])
+  const [pageData, setPageData] = useState([]);
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
   const [notePad, setNotePad] = useState(false);
+  const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
 
-  useEffect( () => {
-    async function fetchPageData(){
+  let notePadSaveBtnToggle = () => {
+    console.log(notePadSaveToggle);
+    setNotePadSaveToggle(!notePadSaveToggle);
+  };
+
+  useEffect(() => {
+    async function fetchPageData() {
       try {
         console.log(1);
-        const getData = await axios.get("http://localhost:5000/");
+        const getData = await axios.get('http://localhost:5000/');
         console.log(getData.data);
-        return getData.data
-        
+        return getData.data;
       } catch (err) {
         console.log(err);
       }
     }
 
-    let data = fetchPageData()
+    let data = fetchPageData();
     setPageData(data);
-  },[])
-  
+  }, []);
+
   let NotepadToggle = () => {
     setNotePad(!notePad);
-     closeFileMenu();
+    closeFileMenu();
   };
 
-
-  
-  
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
-     closeFileMenu();
+    closeFileMenu();
   };
 
   let closeCreateFolderModal = () => {
@@ -63,6 +65,8 @@ function App() {
           closeCreateFolderModal,
           notePad,
           NotepadToggle,
+          notePadSaveToggle,
+          notePadSaveBtnToggle,
         }}
       >
         <DriveBody />
