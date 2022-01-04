@@ -11,8 +11,9 @@ function App() {
   useEffect( () => {
     async function fetchPageData(){
       try {
-        const data = await axios.get("http://localhost:5000/");
-        console.log(data);
+        console.log(1);
+        const getData = await axios.get("http://localhost:5000/");
+        console.log(getData.data);
         return data
         
       } catch (err) {
@@ -21,7 +22,7 @@ function App() {
     }
 
     let data = fetchPageData()
-    console.log(data);
+    setPageData(data);
   },[])
   
   
