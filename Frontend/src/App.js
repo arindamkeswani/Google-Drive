@@ -23,7 +23,8 @@ function App() {
     }
 
     let data = await fetchPageData();
-    setPageData(() => sortPageData(data));
+    let sortedData = await sortPageData(data)
+    setPageData(sortedData);
     
     
   }, [])
