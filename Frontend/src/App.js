@@ -10,18 +10,15 @@ function App() {
   const [notePad, setNotePad] = useState(false);
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
 
-  let notePadSaveBtnToggle = () => {
-    console.log(notePadSaveToggle);
-    setNotePadSaveToggle(!notePadSaveToggle);
-  };
-
-  useEffect(() => {
+  
+  useEffect(async () => {
     async function fetchPageData() {
       try {
-        console.log(1);
-        const getData = await axios.get('http://localhost:5000/');
-        console.log(getData.data);
-        return getData.data;
+        
+        const getData = await axios.get("http://localhost:5000/");
+        // console.log(getData.data.query_returned);
+        return getData.data.query_returned
+
       } catch (err) {
         console.log(err);
       }
@@ -34,6 +31,11 @@ function App() {
     
   }, [])
 
+  
+  let notePadSaveBtnToggle = () => {
+    console.log(notePadSaveToggle);
+    setNotePadSaveToggle(!notePadSaveToggle);
+  };
   let NotepadToggle = () => {
     setNotePad(!notePad);
     closeFileMenu();
