@@ -32,7 +32,11 @@ function Drive_FolderBox(props) {
              edit
            </span>
          </div>
-         <div>
+         <div
+           onClick={() => {
+             driveData.setIsDeleteModalOpened(!driveData.isDeleteModalOpened);
+           }}
+         >
            <span
              class='material-icons-outlined deleteIcon'
              id={folderData.id}

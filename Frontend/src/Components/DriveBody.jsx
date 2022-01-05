@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import AddFolderModal from './Modal/AddFolderModal';
 import NotePad from './Modal/NotePad';
 import EditModal from './Modal/EditModal';
+import DeleteModal from './Modal/DeleteModal';
 
 
 function DriveBody() {
@@ -19,8 +20,9 @@ let driveData = useContext(DataContext);
         <DriveHeader />
         <DriveContent />
       </div>
-      
-      {driveData.isEditModalOpened?<EditModal/>:''}
+
+      {driveData.isDeleteModalOpened&&<DeleteModal/>}
+      {driveData.isEditModalOpened ? <EditModal /> : ''}
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}

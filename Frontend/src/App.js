@@ -12,24 +12,26 @@ function App() {
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
 
   const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
-  const [breadcrumbArr, setBreadcrumbArr] = useState([{name: 'My Drive', id: 'root' }])
+  const [breadcrumbArr, setBreadcrumbArr] = useState([
+    { name: 'My Drive', id: 'root' },
+  ]);
 
   const [dummyState, setDummyState] = useState(true);
 
-  const [currNotepadData, setCurrNotepadData] = useState({})
-  const [retrieved, setRetrieved] = useState(false)
-  const [check_exist_notepad, set_check_exist_notepad] = useState(false)
-  
-  const [isEditModalOpened,setIsEditModalOpened] = useState(false)
+  const [currNotepadData, setCurrNotepadData] = useState({});
+  const [retrieved, setRetrieved] = useState(false);
+  const [check_exist_notepad, set_check_exist_notepad] = useState(false);
 
+  const [isEditModalOpened, setIsEditModalOpened] = useState(false);
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
 
   useEffect(async () => {
     async function fetchPageData() {
       try {
         const getData = await axios.get('http://localhost:5000/', {
           params: {
-            current_folder: currentBreadcrumbID
-          }
+            current_folder: currentBreadcrumbID,
+          },
         });
         return getData.data.query_returned;
       } catch (err) {
@@ -43,8 +45,6 @@ function App() {
     // console.log(currentBreadcrumbID,sortedData);
   }, [dummyState]);
 
-
-
   let notePadSaveBtnToggle = () => {
     console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
@@ -52,8 +52,8 @@ function App() {
   let NotepadToggle = () => {
     setNotePad(!notePad);
     closeFileMenu();
-    setDummyState(!dummyState)
-    setRetrieved(false)
+    setDummyState(!dummyState);
+    setRetrieved(false);
   };
 
   let openCreateFolderModal = () => {
@@ -63,7 +63,7 @@ function App() {
 
   let closeCreateFolderModal = () => {
     setCreateFolderModal(false);
-    setDummyState(!dummyState)
+    setDummyState(!dummyState);
   };
 
   let fileMenuToggleFn = () => {
@@ -126,7 +126,9 @@ function App() {
           check_exist_notepad,
           set_check_exist_notepad,
           isEditModalOpened,
-          setIsEditModalOpened
+          setIsEditModalOpened,
+          isDeleteModalOpened,
+          setIsDeleteModalOpened,
         }}
       >
         <DriveBody />
