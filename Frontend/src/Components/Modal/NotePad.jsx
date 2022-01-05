@@ -12,64 +12,74 @@ function NotePad() {
   let [isItalic, setIsItalic] = useState(false);
   let [content, setContent] = useState('');
   let [fileName, setFolderName] = useState('');
-  const [dummyState, setDummyState] = useState(true)
+
+  console.log(Object.keys(driveData.currNotepadData).length, driveData.retrieved);
+  if (Object.keys(driveData.currNotepadData).length == 11 && driveData.retrieved == false) {
+    driveData.retrieved = true;
+    setContent(driveData.currNotepadData.content)
+    setFolderName(driveData.currNotepadData.file_name)
+    setIsBold(driveData.currNotepadData.bold)
+    setIsItalic(driveData.currNotepadData.italic)
+    setFont(driveData.currNotepadData.font_family)
+    setFontSize(driveData.currNotepadData.font_size)
+  }
 
 
-  let createNotepad = async ()=>{
-    // console.log(content);
-    // await changeContent();
+  let createNotepad = async () => {
     await axios.post('http://localhost:5000/', {
       parent_folder: driveData.currentBreadcrumbID,
-      file_name:fileName,
+      file_name: fileName,
       content: content,
-      font_family:fontFamily,
-      font_size:fontSize,
-      is_bold:isBold,
-      is_italic:isItalic,
-      ext:".txt"
-     });
+      font_family: fontFamily,
+      font_size: fontSize,
+      is_bold: isBold,
+      is_italic: isItalic,
+      ext: ".txt"
+    });
 
   }
+
+
+
+
+
 
 
   let myContentRef = new React.createRef();
   let changeFont = (currentFont) => {
     setFont(currentFont);
+    driveData.currNotepadData.font_family = currentFont
     // console.log(font);
   };
 
   let increaseFont = () => {
-    setFontSize(fontSize + 3);
+    setFontSize(fontSize + 1);
+    driveData.currNotepadData.font_size = fontSize + 1
     // console.log(fontSize);
   };
 
   let decreaseFont = () => {
-    setFontSize(fontSize - 3);
-   
+    setFontSize(fontSize - 1);
+    driveData.currNotepadData.font_size = fontSize - 1
   };
 
   let set_np_file_name = (currentFileName) => {
     setFolderName(currentFileName);
+    driveData.currNotepadData.file_name = currentFileName
     // console.log(folderName);
   };
 
   let toggleBold = () => {
     setIsBold(!isBold);
+    driveData.currNotepadData.bold = !isBold
     // console.log(isBold);
   };
 
   let toggleItalic = () => {
     setIsItalic(!isItalic);
+    driveData.currNotepadData.italic = !isItalic
     // console.log(isItalic);
   };
-
-  // let changeContent = () => {
-  //   let textareaValue = myContentRef.current.value;
-  //   setContent(textareaValue);
-  //   console.log(textareaValue);
-  // };
-
-  
 
   return (
     <>
@@ -90,7 +100,11 @@ function NotePad() {
             </div>
             <div
               class='headerBar-right-iconDivBox close'
-              onClick={driveData.NotepadToggle}
+              onClick={() => {
+                driveData.NotepadToggle();
+                driveData.setCurrNotepadData({});
+                // driveData.retrieved = false;
+              }}
             >
               <span class='material-icons-outlined cancel'> close </span>
             </div>
@@ -108,6 +122,7 @@ function NotePad() {
                 onChange={(e) => {
                   set_np_file_name(e.target.value);
                 }}
+                value={fileName}
               />
               <div class='header_star'>
                 <span class='material-icons-outlined'> grade </span>
@@ -200,8 +215,11 @@ function NotePad() {
               fontFamily: `${fontFamily}`,
             }}
             ref={myContentRef}
-            onChange={(event)=>setContent(event.target.value)}
-          ></textarea>
+            onChange={(event) => { setContent(event.target.value); driveData.currNotepadData.content = event.target.value }}
+            value={content}
+          >
+
+          </textarea>
         </div>
       </div>
     </>

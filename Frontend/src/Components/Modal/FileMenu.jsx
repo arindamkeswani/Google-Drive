@@ -18,7 +18,10 @@ function FileMenu() {
           <div class='menuFile-Name'>Folder</div>
         </div>
         <div class='multiple-single-box'>
-          <div class='menu-multiple-box' onClick={driveData.NotepadToggle}>
+          <div class='menu-multiple-box' onClick={() => {
+            driveData.NotepadToggle()
+            // driveData.setCurrentNotepadDetails({})
+          }}>
             <div class='menuIcon'>
               <span class='material-icons googleDocsIcon'> description </span>
             </div>

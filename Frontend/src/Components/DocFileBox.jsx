@@ -7,8 +7,16 @@ function DocFileBox(props) {
   let driveData = useContext(DataContext);
   let display_file_id = (id,name) => {
     driveData.setBreadcrumbID(id)
-    driveData.setBreadcrumbArr([...driveData.breadcrumbArr, {name: name,id:id}])
   }
+
+ let openNotepad=(id,name)=>{
+   driveData.NotepadToggle();
+
+  let currentNotepadData= driveData.pageData.find((ele)=> ele.id == id)
+  // console.log(currentNotepadData);
+   driveData.setCurrNotepadData(currentNotepadData)
+  }
+
   return (
     <>
       <div
@@ -16,7 +24,8 @@ function DocFileBox(props) {
         id={fileData.id}
         parent_folder={fileData.parent_folder}
         onClick={() => {
-          display_file_id(fileData.id, fileData.file_name)
+          display_file_id(fileData.id, fileData.file_name);
+          openNotepad(fileData.id, fileData.file_name);
         }}
       >
         <div class='editBox'>

@@ -7,11 +7,17 @@ function App() {
   const [pageData, setPageData] = useState([]);
   const [fileMenuToggle, setFileMenuToggle] = useState(false);
   const [createFolderModal, setCreateFolderModal] = useState(false);
+
   const [notePad, setNotePad] = useState(false);
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
+
   const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
   const [breadcrumbArr, setBreadcrumbArr] = useState([{name: 'My Drive', id: 'root' }])
+
   const [dummyState, setDummyState] = useState(true);
+
+  const [currNotepadData, setCurrNotepadData] = useState({})
+  const [retrieved, setRetrieved] = useState(false)
 
 
   useEffect(async () => {
@@ -33,9 +39,7 @@ function App() {
     setPageData(sortedData);
   }, [dummyState]);
 
-  useEffect(() => {
-    // console.log(breadcrumbArr);
-  })
+
 
   let notePadSaveBtnToggle = () => {
     console.log(notePadSaveToggle);
@@ -45,6 +49,7 @@ function App() {
     setNotePad(!notePad);
     closeFileMenu();
     setDummyState(!dummyState)
+    setRetrieved(false)
   };
 
   let openCreateFolderModal = () => {
@@ -107,7 +112,11 @@ function App() {
           breadcrumbArr,
           setBreadcrumbArr,
           dummyState,
-          setDummyState
+          setDummyState,
+          currNotepadData,
+          setCurrNotepadData,
+          retrieved,
+          setRetrieved
         }}
       >
         <DriveBody />
