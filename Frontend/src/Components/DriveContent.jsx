@@ -10,18 +10,37 @@ function DriveContent() {
   let folderDataArr = driveData.pageData;
   let breadcrumbArr = driveData.breadcrumbArr;
 
-  let update_arr_according_to_breadcrumb = (id, name) => {
+  let update_arr_according_to_breadcrumb =(id, name) => {
     let currBreadcrumbFound = false
-    let newArr = breadcrumbArr.filter((e) => {
-      if (!currBreadcrumbFound) {
-        if (e.id == id) {
+    // let newArr = breadcrumbArr.filter((e) => {
+    //   if (!currBreadcrumbFound) {
+    //     if (e.id == id) {
+    //       currBreadcrumbFound = true;
+    //     }
+    //     return e
+    //   }
+    // })
+    // let newArr=[]
+    for(let i=breadcrumbArr.length-1; i>=0; i--){
+      if (currBreadcrumbFound==false) {
+        if (breadcrumbArr[i].id == id) {
           currBreadcrumbFound = true;
+        }else{
+          breadcrumbArr.pop()
         }
-        return e
+        
       }
-    })
+      else{
+        break;
+      }
+    }
 
-    driveData.setBreadcrumbArr(newArr)
+    //Following statements need to be in order
+    // driveData.setBreadcrumbArr(newArr)
+    driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length-1].id)
+    // console.log(driveData.currentBreadcrumbID);
+    driveData.setDummyState(!driveData.dummyState)
+    // console.log(driveData.pageData);
 
   }
 
@@ -34,7 +53,7 @@ function DriveContent() {
             return (
               <div class="rootBox-contianer" onClick={() => {
                 update_arr_according_to_breadcrumb(e.id, e.name)
-                
+
               }}>
                 <div class="rootBox" id={e.id}>{e.name}</div>
                 <span class="material-icons-outlined"> chevron_right </span>

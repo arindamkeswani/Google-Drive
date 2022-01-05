@@ -9,6 +9,7 @@ function Drive_FolderBox(props) {
   let display_folder_id=(id,name)=>{
     driveData.setBreadcrumbID(id)
     driveData.setBreadcrumbArr([...driveData.breadcrumbArr, { name:name, id: id }])
+    driveData.setDummyState(!driveData.dummyState)
    }
  return (
    <>

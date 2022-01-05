@@ -22,7 +22,6 @@ function App() {
             current_folder: currentBreadcrumbID
           }
         });
-        // console.log(getData.data.query_returned);
         return getData.data.query_returned;
       } catch (err) {
         console.log(err);
@@ -35,7 +34,7 @@ function App() {
   }, [dummyState]);
 
   useEffect(() => {
-    console.log(breadcrumbArr);
+    // console.log(breadcrumbArr);
   })
 
   let notePadSaveBtnToggle = () => {
@@ -106,8 +105,9 @@ function App() {
           setBreadcrumbID,
           pageData,
           breadcrumbArr,
-          setBreadcrumbArr
-
+          setBreadcrumbArr,
+          dummyState,
+          setDummyState
         }}
       >
         <DriveBody />
