@@ -1,8 +1,21 @@
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import DataContext from '../DataContext';
+import axios from 'axios';
 function EditModal() {
   let driveData = useContext(DataContext);
+
+  const [newName, setNewName] = useState('')
+
+  let renameElement = async (elementDetails) => {
+    console.log("Send rename request");
+    await axios.patch('http://localhost:5000/', {
+      existing_id: elementDetails[1],
+      name: newName,
+      file_type: elementDetails[3]
+    });
+  }
+
   return (
     <>
       <div class='modal' id='editFolderModal'>
@@ -12,8 +25,9 @@ function EditModal() {
             <input
               id='renameFolderInput'
               type='text'
-              placeholder='Rename Folder '
-              onfocus='this.select()'
+              defaultValue={driveData.isEditModalOpened[2]}
+              onChange={(event) => { setNewName(event.target.value) }}
+
             />
           </div>
           <div class='cancel_confirm-box'>
@@ -21,7 +35,7 @@ function EditModal() {
               class='cancel-btn'
               id='cancelEditFolderModal'
               onClick={() => {
-                driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+                driveData.setIsEditModalOpened([false, '', '', '']);
               }}
             >
               Cancel
@@ -30,7 +44,9 @@ function EditModal() {
               class='confirm-btn'
               id='editFolderBtn'
               onClick={() => {
-                driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+                renameElement(driveData.isEditModalOpened)
+                driveData.setIsEditModalOpened([false, '', '', '']);
+                driveData.setDummyState(!driveData.dummyState)
               }}
             >
               OK

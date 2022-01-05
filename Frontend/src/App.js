@@ -20,7 +20,7 @@ function App() {
   const [retrieved, setRetrieved] = useState(false)
   const [check_exist_notepad, set_check_exist_notepad] = useState(false)
   
-  const [isEditModalOpened,setIsEditModalOpened] = useState(false)
+  const [isEditModalOpened,setIsEditModalOpened] = useState([false, '','',''])
 
 
   useEffect(async () => {

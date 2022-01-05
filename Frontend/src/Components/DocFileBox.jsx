@@ -29,7 +29,7 @@ function DocFileBox(props) {
         <div class='editBox'>
           <div
             onClick={() => {
-              driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+              driveData.setIsEditModalOpened([!driveData.isEditModalOpened[0], fileData.id, fileData.file_name, "notepad"]);
             }}
           >
             <span

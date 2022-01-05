@@ -2,6 +2,7 @@
 import './FolderBox.css'
 import { useContext } from 'react';
 import DataContext from './DataContext';
+import EditModal from './Modal/EditModal';
 function Drive_FolderBox(props) {
 
   let folderData = props.folderDataInObj;
@@ -21,7 +22,7 @@ function Drive_FolderBox(props) {
        <div class='editBox'>
          <div
            onClick={() => {
-             driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+             driveData.setIsEditModalOpened([!driveData.isEditModalOpened[0], folderData.id, folderData.folder_name, "folder"]);
            }}
          >
            <span
