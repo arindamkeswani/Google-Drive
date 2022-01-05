@@ -13,7 +13,7 @@ function NotePad() {
   let [content, setContent] = useState('');
   let [fileName, setFolderName] = useState('');
 
-  console.log(Object.keys(driveData.currNotepadData).length, driveData.retrieved);
+  // console.log(Object.keys(driveData.currNotepadData).length, driveData.retrieved);
   if (Object.keys(driveData.currNotepadData).length == 11 && driveData.retrieved == false) {
     driveData.retrieved = true;
     setContent(driveData.currNotepadData.content)
@@ -103,7 +103,9 @@ function NotePad() {
               onClick={() => {
                 driveData.NotepadToggle();
                 driveData.setCurrNotepadData({});
-                // driveData.retrieved = false;
+                driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length-1].id)
+                driveData.setDummyState(!driveData.dummyState);
+                driveData.retrieved = false;
               }}
             >
               <span class='material-icons-outlined cancel'> close </span>

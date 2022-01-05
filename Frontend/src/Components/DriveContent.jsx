@@ -21,6 +21,7 @@ function DriveContent() {
     //   }
     // })
     // let newArr=[]
+    console.log(breadcrumbArr);
     for(let i=breadcrumbArr.length-1; i>=0; i--){
       if (currBreadcrumbFound==false) {
         if (breadcrumbArr[i].id == id) {
@@ -36,7 +37,7 @@ function DriveContent() {
     }
 
     //Following statements need to be in order
-    // driveData.setBreadcrumbArr(newArr)
+    console.log(driveData.breadcrumbArr);
     driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length-1].id)
     // console.log(driveData.currentBreadcrumbID);
     driveData.setDummyState(!driveData.dummyState)

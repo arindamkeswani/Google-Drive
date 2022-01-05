@@ -37,6 +37,7 @@ function App() {
     let data = await fetchPageData();
     let sortedData = await sortPageData(data);
     setPageData(sortedData);
+    // console.log(currentBreadcrumbID,sortedData);
   }, [dummyState]);
 
 
@@ -95,6 +96,8 @@ function App() {
     <>
       <DataContext.Provider
         value={{
+          pageData,
+          setPageData,
           fileMenuToggle,
           fileMenuToggleFn,
           closeFileMenu,
