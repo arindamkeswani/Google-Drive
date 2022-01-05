@@ -20,6 +20,7 @@ function FileMenu() {
         <div class='multiple-single-box'>
           <div class='menu-multiple-box' onClick={() => {
             driveData.NotepadToggle()
+            driveData.set_check_exist_notepad(false)
             // driveData.setCurrentNotepadDetails({})
           }}>
             <div class='menuIcon'>

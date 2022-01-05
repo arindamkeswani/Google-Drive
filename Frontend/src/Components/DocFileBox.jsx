@@ -12,6 +12,7 @@ function DocFileBox(props) {
 
   let openNotepad = (id, name) => {
     driveData.NotepadToggle();
+    driveData.set_check_exist_notepad(true)
     let currentNotepadData = driveData.pageData.find((ele) => ele.id == id)
     // console.log(currentNotepadData);
     // driveData.setBreadcrumbID()

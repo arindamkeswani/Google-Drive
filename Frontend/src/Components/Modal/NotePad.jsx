@@ -103,7 +103,9 @@ function NotePad() {
               onClick={() => {
                 driveData.NotepadToggle();
                 driveData.setCurrNotepadData({});
-                driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length-1].id)
+                driveData.setBreadcrumbID(
+                  driveData.breadcrumbArr[driveData.breadcrumbArr.length - 1].id
+                );
                 driveData.setDummyState(!driveData.dummyState);
                 driveData.retrieved = false;
               }}
@@ -147,7 +149,7 @@ function NotePad() {
                     driveData.NotepadToggle();
                   }}
                 >
-                  Save
+                  {driveData.check_exist_notepad?'Update':'Save'}
                 </div>
               ) : (
                 ' '
@@ -217,11 +219,12 @@ function NotePad() {
               fontFamily: `${fontFamily}`,
             }}
             ref={myContentRef}
-            onChange={(event) => { setContent(event.target.value); driveData.currNotepadData.content = event.target.value }}
+            onChange={(event) => {
+              setContent(event.target.value);
+              driveData.currNotepadData.content = event.target.value;
+            }}
             value={content}
-          >
-
-          </textarea>
+          ></textarea>
         </div>
       </div>
     </>

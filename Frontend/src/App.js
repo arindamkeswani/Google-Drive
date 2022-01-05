@@ -19,6 +19,7 @@ function App() {
   const [currNotepadData, setCurrNotepadData] = useState({})
   const [retrieved, setRetrieved] = useState(false)
 
+  const [check_exist_notepad,set_check_exist_notepad] = useState(false)
 
   useEffect(async () => {
     async function fetchPageData() {
@@ -119,7 +120,9 @@ function App() {
           currNotepadData,
           setCurrNotepadData,
           retrieved,
-          setRetrieved
+          setRetrieved,
+          check_exist_notepad,
+          set_check_exist_notepad
         }}
       >
         <DriveBody />
