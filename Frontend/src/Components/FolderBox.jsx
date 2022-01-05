@@ -13,16 +13,20 @@ function Drive_FolderBox(props) {
    }
  return (
    <>
-      <div
+     <div
        class='folderBox'
        id={folderData.id}
        parent_folder={folderData.parent_folder}
-       onClick={()=>{
-         display_folder_id(folderData.id,folderData.folder_name)
+       onClick={() => {
+         display_folder_id(folderData.id, folderData.folder_name);
        }}
      >
        <div class='editBox'>
-         <div>
+         <div
+           onClick={() => {
+             driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+           }}
+         >
            <span
              class='material-icons-outlined editIcon'
              id={folderData.id}
@@ -45,7 +49,7 @@ function Drive_FolderBox(props) {
          <span class='material-icons'> folder </span>
        </div>
        <div class='folderName'>{folderData.folder_name}</div>
-     </div> 
+     </div>
    </>
  );
 }

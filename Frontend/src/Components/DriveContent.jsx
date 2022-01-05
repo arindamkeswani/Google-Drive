@@ -52,32 +52,31 @@ function DriveContent() {
           {/* ------------------------ */}
           {breadcrumbArr.map((e) => {
             return (
-              <div class="rootBox-contianer" onClick={() => {
-                update_arr_according_to_breadcrumb(e.id, e.name)
-
-              }}>
-                <div class="rootBox" id={e.id}>{e.name}</div>
-                <span class="material-icons-outlined"> chevron_right </span>
+              <div
+                class='rootBox-contianer'
+                onClick={() => {
+                  update_arr_according_to_breadcrumb(e.id, e.name);
+                }}
+              >
+                <div class='rootBox' id={e.id}>
+                  {e.name}
+                </div>
+                <span class='material-icons-outlined'> chevron_right </span>
               </div>
-            )
+            );
           })}
-
-
         </div>
         <div class='folder-container'>
           <div class='folder-navigation'>Folder</div>
           <div class='inner-folder-container'>
-
-
             {folderDataArr.map((ele) => {
               if (ele.folder_name) {
                 return <DriveFolderBox folderDataInObj={ele} />;
               } else if (ele.file_name) {
-                if (ele.ext == ".txt") {
+                if (ele.ext == '.txt') {
                   return <DocFileBox fileDataInObj={ele} />;
                 }
               }
-
             })}
           </div>
         </div>

@@ -25,10 +25,13 @@ function DocFileBox(props) {
         class='folderBox'
         id={fileData.id}
         parent_folder={fileData.parent_folder}
-
       >
         <div class='editBox'>
-          <div>
+          <div
+            onClick={() => {
+              driveData.setIsEditModalOpened(!driveData.isEditModalOpened);
+            }}
+          >
             <span
               class='material-icons-outlined editIcon'
               id={fileData.id}
@@ -47,10 +50,13 @@ function DocFileBox(props) {
             </span>
           </div>
         </div>
-        <div class='fileIcon' onClick={() => {
-          display_file_id(fileData.id, fileData.file_name);
-          openNotepad(fileData.id, fileData.file_name);
-        }}>
+        <div
+          class='fileIcon'
+          onClick={() => {
+            display_file_id(fileData.id, fileData.file_name);
+            openNotepad(fileData.id, fileData.file_name);
+          }}
+        >
           <span class='material-icons'> description </span>
         </div>
         <div class='folderName'>{fileData.file_name}</div>

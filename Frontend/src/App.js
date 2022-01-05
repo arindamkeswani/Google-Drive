@@ -18,7 +18,10 @@ function App() {
 
   const [currNotepadData, setCurrNotepadData] = useState({})
   const [retrieved, setRetrieved] = useState(false)
-  const [check_exist_notepad,set_check_exist_notepad] = useState(false)
+  const [check_exist_notepad, set_check_exist_notepad] = useState(false)
+  
+  const [isEditModalOpened,setIsEditModalOpened] = useState(false)
+
 
   useEffect(async () => {
     async function fetchPageData() {
@@ -121,7 +124,9 @@ function App() {
           retrieved,
           setRetrieved,
           check_exist_notepad,
-          set_check_exist_notepad
+          set_check_exist_notepad,
+          isEditModalOpened,
+          setIsEditModalOpened
         }}
       >
         <DriveBody />

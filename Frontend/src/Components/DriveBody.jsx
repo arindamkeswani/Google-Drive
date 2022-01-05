@@ -8,6 +8,8 @@ import DataContext from './DataContext';
 import { useContext } from 'react';
 import AddFolderModal from './Modal/AddFolderModal';
 import NotePad from './Modal/NotePad';
+import EditModal from './Modal/EditModal';
+
 
 function DriveBody() {
 let driveData = useContext(DataContext);
@@ -17,6 +19,8 @@ let driveData = useContext(DataContext);
         <DriveHeader />
         <DriveContent />
       </div>
+      
+      {driveData.isEditModalOpened?<EditModal/>:''}
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}
