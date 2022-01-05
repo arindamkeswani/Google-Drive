@@ -40,7 +40,19 @@ function NotePad() {
   }
 
 
-
+  let updateNotepad = async (notepadID) =>{
+    console.log("Send update req");
+    await axios.patch('http://localhost:5000/', {
+      existing_id: notepadID,
+      file_name: fileName,
+      content: content,
+      font_family: fontFamily,
+      font_size: fontSize,
+      is_bold: isBold,
+      is_italic: isItalic,
+      ext:".txt"
+    });
+  }
 
 
 
@@ -145,8 +157,13 @@ function NotePad() {
                   class='doc-saveButton'
                   onClick={() => {
                     // changeContent();
-                    createNotepad();
-                    driveData.NotepadToggle();
+                    if(driveData.check_exist_notepad==false){
+                      createNotepad();
+                      driveData.NotepadToggle();
+                    }
+                    else{
+                      updateNotepad(driveData.currentBreadcrumbID);
+                    }
                   }}
                 >
                   {driveData.check_exist_notepad?'Update':'Save'}

@@ -91,3 +91,47 @@ exports.save = (req, res) => {
         }
     })
 }
+
+exports.update = (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err)
+            throw err; //not connected
+
+        
+        // console.log('Connected as ID (data controller Save in DB): ', connection.threadId);
+
+        
+        id = req.body.existing_id;
+        console.log("Trying to update note with ID:",id);
+
+        if (req.body.folder_name) {
+            connection.query('INSERT INTO folders (id, user_id, folder_name, parent_folder, creation_date) VALUES (?,?,?,?,?);', [unique_id, 1, req.body.folder_name, parent_folder, timestamp], (err, rows) => {
+                connection.release();
+            })
+        }
+        else if (req.body.file_name) {
+            if (req.body.ext == ".txt") {
+
+                fileName = req.body.file_name;
+                // console.log(fileName);
+                fontSize = req.body.font_size;
+                // console.log(fontSize);
+                fontfamily = req.body.font_family;
+                // console.log(fontfamily);
+                isBold = req.body.is_bold;
+                // console.log(isBold);
+                isItalic = req.body.is_italic;
+                // console.log(isItalic);
+                content = req.body.content;
+                // console.log(content);
+
+                connection.query('UPDATE notepads SET file_name=?, font_size=?, font_family=?, bold=?, italic=?, content=? WHERE user_id=? AND id=?;', [fileName, fontSize, fontfamily, isBold, isItalic, content, 1, id], (err, rows) => {
+                    if (err)
+                        throw err; //not connected
+
+                    connection.release();
+                })
+            }
+        }
+    })
+}
