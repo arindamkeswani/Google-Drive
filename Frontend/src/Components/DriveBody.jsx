@@ -1,5 +1,3 @@
-
-
 import './DriveBody.css';
 import DriveContent from './DriveContent';
 import DriveHeader from './DriveHeader';
@@ -20,9 +18,14 @@ let driveData = useContext(DataContext);
         <DriveHeader />
         <DriveContent />
       </div>
+<<<<<<< HEAD
 
       {driveData.isDeleteModalOpened&&<DeleteModal/>}
       {driveData.isEditModalOpened ? <EditModal /> : ''}
+=======
+      {console.log(driveData.isEditModalOpened)}
+      {driveData.isEditModalOpened[0]?<EditModal/>:''}
+>>>>>>> 18e3d699f386c4537d763d7413385e620dac1111
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}
