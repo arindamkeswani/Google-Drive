@@ -10,15 +10,16 @@ function App() {
   const [notePad, setNotePad] = useState(false);
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
   const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
-  const [dummyState, setDummyState] = useState(true)
+  const [breadcrumbArr, setBreadcrumbArr] = useState([{name: 'My Drive', id: 'root' }])
+  const [dummyState, setDummyState] = useState(true);
 
 
   useEffect(async () => {
     async function fetchPageData() {
       try {
-        const getData = await axios.get('http://localhost:5000/',{
+        const getData = await axios.get('http://localhost:5000/', {
           params: {
-            current_folder:currentBreadcrumbID
+            current_folder: currentBreadcrumbID
           }
         });
         // console.log(getData.data.query_returned);
@@ -33,8 +34,12 @@ function App() {
     setPageData(sortedData);
   }, [dummyState]);
 
+  useEffect(() => {
+    console.log(breadcrumbArr);
+  })
+
   let notePadSaveBtnToggle = () => {
-console.log(notePadSaveToggle);
+    console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
   };
   let NotepadToggle = () => {
@@ -98,7 +103,11 @@ console.log(notePadSaveToggle);
           notePadSaveToggle,
           sortPageData,
           currentBreadcrumbID,
+          setBreadcrumbID,
           pageData,
+          breadcrumbArr,
+          setBreadcrumbArr
+
         }}
       >
         <DriveBody />

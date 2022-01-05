@@ -1,15 +1,24 @@
 
 import './FolderBox.css'
-
+import { useContext } from 'react';
+import DataContext from './DataContext';
 function Drive_FolderBox(props) {
+
   let folderData = props.folderDataInObj;
-  
+   let driveData = useContext(DataContext);
+  let display_folder_id=(id,name)=>{
+    driveData.setBreadcrumbID(id)
+    driveData.setBreadcrumbArr([...driveData.breadcrumbArr, { name:name, id: id }])
+   }
  return (
    <>
       <div
        class='folderBox'
        id={folderData.id}
        parent_folder={folderData.parent_folder}
+       onClick={()=>{
+         display_folder_id(folderData.id,folderData.folder_name)
+       }}
      >
        <div class='editBox'>
          <div>
