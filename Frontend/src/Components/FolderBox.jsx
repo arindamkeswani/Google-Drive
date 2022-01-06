@@ -35,7 +35,8 @@ function Drive_FolderBox(props) {
          </div>
          <div
            onClick={() => {
-             driveData.setIsDeleteModalOpened(!driveData.isDeleteModalOpened);
+             
+             driveData.setIsDeleteModalOpened([!driveData.isDeleteModalOpened[0], folderData.id, folderData.folder_name, "folder"]);
            }}
          >
            <span

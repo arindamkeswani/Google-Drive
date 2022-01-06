@@ -41,7 +41,8 @@ function DocFileBox(props) {
             </span>
           </div>
           <div onClick={() => {
-            driveData.setIsDeleteModalOpened(!driveData.isDeleteModalOpened);
+            
+            driveData.setIsDeleteModalOpened([!driveData.isDeleteModalOpened[0], fileData.id, fileData.file_name, "notepad"]);
           }}>
             <span
               class='material-icons-outlined deleteIcon'

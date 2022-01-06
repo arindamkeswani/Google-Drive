@@ -155,3 +155,111 @@ exports.update = (req, res) => {
         }
     })
 }
+
+
+exports.delete = (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err)
+            throw err; //not connected
+
+
+        async function deleteFilesPostOrder(user_id, id, name) {
+            // console.log("Currently testing:", name);
+            connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;DELETE FROM notepads WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id], async (err, rows) => {
+                if (err)
+                    throw err; //not connected
+
+                // Case 1: Loop over each child folder if there are any and check each for their children to be deleted recursively
+                if (rows[0].length > 0) {
+                    for (let i = 0; i < rows[0].length; i++) {
+                        // console.log(rows[0][i].id, "with the name", rows[0][i].folder_name, "will be sent in the next recursive call to be tested");
+                        await deleteFilesPostOrder(user_id, rows[0][i].id, rows[0][i].folder_name)
+
+                    }
+
+                }
+
+
+                // Base case 1, no children, delete folder
+                // connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;SELECT * FROM notepads WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id], async (err, rows) => {
+                //     if (err)
+                //         throw err; //not connected
+                //     console.log(id, name, "has", rows[0].length + rows[1].length, "children folders");
+                //     if (rows[0].length == 0 && rows[1].length == 0) {
+                //         console.log("delete folder with ID:", id, "as it has no children");
+                //         connection.query('DELETE FROM folders WHERE user_id=? AND id=?;', [user_id, id], (err, rows) => {
+                //             if (err)
+                //                 throw err; //not connected
+                //         });
+                //         return;
+                //     }
+                // })
+
+            })
+        }
+
+        async function cleanUpFolders(user_id, id, name) {
+            connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;', [user_id, id], async (err, rows) => {
+                if (err)
+                    throw err;
+
+                //go in post order to delete children
+                if (rows.length > 0) {
+                    console.log(`Number of original children for ${name}: ${rows.length}`);
+                    for (let i = 0; i < rows.length; i++) {
+                        console.log("Cleaning up:", rows[i].folder_name);
+                        await cleanUpFolders(user_id, rows[i].id, rows[i].folder_name)
+                    }
+                }
+                // return;
+
+                // Delete in post order
+                
+                    connection.query('DELETE FROM folders WHERE user_id=? AND id=?;', [user_id,id], async (err, rows) => {
+                        if (err)
+                            throw err;
+                        console.log("Deleted", name);
+                    })
+                
+
+
+            })
+        }
+
+
+        //delete the appropriate data and its children, if any
+        console.log(req.body);
+        id = req.body.existing_id;
+        fileType = req.body.file_type;
+        console.log("Trying to delete data with ID:", id, "and type:", fileType);
+        // DELETE FROM folders WHERE user_id=? AND parent_folder=?;
+        if (fileType == "folder") {
+            //delete the folder itself, all children folders, all children files
+
+            connection.query('DELETE FROM folders WHERE id=? AND user_id=?;', [id, 1], (err, rows) => {
+                if (err)
+                    throw err; //not connected
+                deleteFilesPostOrder(1, id, req.body.name)
+
+                //clean up
+                connection.query('SELECT * FROM folders WHERE parent_folder=? AND user_id=?;', [id, 1], (err, rows) => {
+                    if (err)
+                        throw err; //not connected
+                    for (let i = 0; i < rows.length; i++) {
+                        cleanUpFolders(1, rows[i].id, rows[i].folder_name)
+                    }
+                })
+                connection.release();
+            })
+        }
+        else if (fileType == "notepad") {
+            connection.query('DELETE FROM notepads WHERE user_id=? AND id=?;', [1, id], (err, rows) => {
+                if (err)
+                    throw err; //not connected
+
+                connection.release();
+            })
+        }
+
+    })
+}

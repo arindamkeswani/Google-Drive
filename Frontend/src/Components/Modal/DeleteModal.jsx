@@ -1,8 +1,22 @@
 
 import { useContext } from 'react';
 import DataContext from '../DataContext';
+import axios from 'axios';
 function DeleteModal() {
-    let driveData = useContext(DataContext);
+  let driveData = useContext(DataContext);
+
+  let deleteElement = async (elementDetails) => {
+    // console.log("Send delete request");
+    // console.log(elementDetails[1],elementDetails[2],elementDetails[3]);
+    await axios.delete('http://localhost:5000/', {
+      data: {
+        existing_id: elementDetails[1],
+        name: elementDetails[2],
+        file_type: elementDetails[3]
+      }
+    });
+  }
+
   return (
     <>
       <div class='modal' id='deleteFolderModal'>
@@ -17,7 +31,7 @@ function DeleteModal() {
               id='cancelDeleteFolderModal'
               onClick={() => {
                 driveData.setIsDeleteModalOpened(
-                  !driveData.isDeleteModalOpened
+                  [!driveData.isDeleteModalOpened[0], '', '', '']
                 );
               }}
             >
@@ -27,9 +41,11 @@ function DeleteModal() {
               class='confirm-btn'
               id='deleteFolderBtn'
               onClick={() => {
+                deleteElement(driveData.isDeleteModalOpened)
                 driveData.setIsDeleteModalOpened(
-                  !driveData.isDeleteModalOpened
+                  [!driveData.isDeleteModalOpened[0], '', '', '']
                 );
+                driveData.setDummyState(!driveData.dummyState)
               }}
             >
               OK
