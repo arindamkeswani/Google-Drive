@@ -25,6 +25,8 @@ function App() {
   const [isEditModalOpened,setIsEditModalOpened] = useState([false, '','',''])
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState([false, '','','']);
 
+  const [searchQuery, setSearchQuery] = useState('')
+
   useEffect(async () => {
     async function fetchPageData() {
       try {
@@ -41,7 +43,21 @@ function App() {
 
     let data = await fetchPageData();
     let sortedData = await sortPageData(data);
-    setPageData(sortedData);
+    // console.log(sortedData);
+
+    function searched(elem) {
+      // console.log(elem ,searchQuery);
+      if(elem.file_name && elem.file_name.includes(searchQuery)){
+        return elem;
+      }
+
+      if(elem.folder_name && elem.folder_name.includes(searchQuery)){
+        return elem;
+      }
+    }
+
+    setPageData(sortedData.filter(searched));
+    // console.log(pageData);
     // console.log(currentBreadcrumbID,sortedData);
   }, [dummyState]);
 
@@ -129,6 +145,8 @@ function App() {
           setIsEditModalOpened,
           isDeleteModalOpened,
           setIsDeleteModalOpened,
+          searchQuery,
+          setSearchQuery
         }}
       >
         <DriveBody />
