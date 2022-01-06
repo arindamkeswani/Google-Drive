@@ -6,11 +6,12 @@ function DocFileBox(props) {
   let fileData = props.fileDataInObj;
   let driveData = useContext(DataContext);
   let display_file_id = (id, name) => {
-    // driveData.setBreadcrumbArr([...driveData.breadcrumbArr, { name:name, id: id }])
-    // driveData.setBreadcrumbID(id)
+  //   // driveData.setBreadcrumbArr([...driveData.breadcrumbArr, { name:name, id: id }])
+  //   // driveData.setBreadcrumbID(id)
   }
 
-  let openNotepad = (id, name) => {
+  //open existing file and set its data in the UI
+  let openNotepad = (id, name) => { 
     driveData.NotepadToggle();
     driveData.set_check_exist_notepad(true)
     let currentNotepadData = driveData.pageData.find((ele) => ele.id == id)
@@ -29,6 +30,7 @@ function DocFileBox(props) {
         <div class='editBox'>
           <div
             onClick={() => {
+              //retrieve selected file's data and display the original name in the Edit File name modal
               driveData.setIsEditModalOpened([!driveData.isEditModalOpened[0], fileData.id, fileData.file_name, "notepad"]);
             }}
           >
@@ -41,7 +43,7 @@ function DocFileBox(props) {
             </span>
           </div>
           <div onClick={() => {
-            
+            //retrieve selected file's data and to be send via the Delete File name modal
             driveData.setIsDeleteModalOpened([!driveData.isDeleteModalOpened[0], fileData.id, fileData.file_name, "notepad"]);
           }}>
             <span

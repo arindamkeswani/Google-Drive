@@ -5,9 +5,8 @@ import axios from 'axios';
 function DeleteModal() {
   let driveData = useContext(DataContext);
 
-  let deleteElement = async (elementDetails) => {
-    // console.log("Send delete request");
-    // console.log(elementDetails[1],elementDetails[2],elementDetails[3]);
+  let deleteElement = async (elementDetails) => { //send DELETE request to remove the selected file/folder
+    
     await axios.delete('http://localhost:5000/', {
       data: {
         existing_id: elementDetails[1],
@@ -23,7 +22,7 @@ function DeleteModal() {
         <div class='innerModal'>
           <div class='nameText'>Delete Folder</div>
           <div class='modal-inputBox'>
-            This folder will be deleted. Confirm?
+            Data will be permanently deleted. Confirm?
           </div>
           <div class='cancel_confirm-box'>
             <div

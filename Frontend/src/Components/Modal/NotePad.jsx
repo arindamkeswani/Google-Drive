@@ -6,6 +6,7 @@ import './NotePad.css';
 function NotePad() {
   let driveData = useContext(DataContext);
 
+  //States to store the styling and content of the Notepad
   let [fontFamily, setFont] = useState('sans-serif');
   let [fontSize, setFontSize] = useState(18);
   let [isBold, setIsBold] = useState(false);
@@ -13,7 +14,10 @@ function NotePad() {
   let [content, setContent] = useState('');
   let [fileName, setFolderName] = useState('');
 
-  // console.log(Object.keys(driveData.currNotepadData).length, driveData.retrieved);
+
+  //Notepad table has 11 columns, so the first condition will only run if we have retrieved the data of an existing file
+  //This will help in avoiding overwriting data in the states.
+  //The following block of code is used to retrieve data from the database and store it in states, which will then be displayed on the UI
   if (Object.keys(driveData.currNotepadData).length == 11 && driveData.retrieved == false) {
     driveData.retrieved = true;
     setContent(driveData.currNotepadData.content)
@@ -25,6 +29,7 @@ function NotePad() {
   }
 
 
+  //Create a new notepad by sending a POST request with the styling and the content
   let createNotepad = async () => {
     await axios.post('http://localhost:5000/', {
       parent_folder: driveData.currentBreadcrumbID,
@@ -39,8 +44,8 @@ function NotePad() {
 
   }
 
-
-  let updateNotepad = async (notepadID) =>{
+  //function to handle updation of the data of an existing Notepad
+  let updateNotepad = async (notepadID) => {
     console.log("Send update req");
     await axios.patch('http://localhost:5000/', {
       existing_id: notepadID,
@@ -50,7 +55,7 @@ function NotePad() {
       font_size: fontSize,
       is_bold: isBold,
       is_italic: isItalic,
-      ext:".txt"
+      ext: ".txt"
     });
   }
 
@@ -156,17 +161,17 @@ function NotePad() {
                 <div
                   class='doc-saveButton'
                   onClick={() => {
-                    // changeContent();
-                    if(driveData.check_exist_notepad==false){
+                    // if the notepad is new, save it, otherwise update the data
+                    if (driveData.check_exist_notepad == false) {
                       createNotepad();
                       driveData.NotepadToggle();
                     }
-                    else{
+                    else {
                       updateNotepad(driveData.currentBreadcrumbID);
                     }
                   }}
                 >
-                  {driveData.check_exist_notepad?'Update':'Save'}
+                  {driveData.check_exist_notepad ? 'Update' : 'Save'}
                 </div>
               ) : (
                 ' '

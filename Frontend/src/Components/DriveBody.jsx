@@ -11,6 +11,7 @@ import DeleteModal from './Modal/DeleteModal';
 
 
 function DriveBody() {
+  //Toggle UI elements based on the following conditions
 let driveData = useContext(DataContext);
   return (
     <>
@@ -18,7 +19,7 @@ let driveData = useContext(DataContext);
         <DriveHeader />
         <DriveContent />
       </div>
-
+      
       {driveData.isDeleteModalOpened[0]&&<DeleteModal/>}
       {driveData.isEditModalOpened[0]?<EditModal/>:''}
       {driveData.fileMenuToggle ? <FileMenu /> : ''}

@@ -1,14 +1,13 @@
-
 import { useContext, useState } from 'react';
 import DataContext from '../DataContext';
 import axios from 'axios';
 function EditModal() {
   let driveData = useContext(DataContext);
 
-  const [newName, setNewName] = useState('')
+  const [newName, setNewName] = useState('') //stores the data entered by the user in the input box
 
-  let renameElement = async (elementDetails) => {
-    console.log("Send rename request");
+  let renameElement = async (elementDetails) => {//send PATCH request to rename the selected file/folder
+    
     await axios.patch('http://localhost:5000/', {
       existing_id: elementDetails[1],
       name: newName,

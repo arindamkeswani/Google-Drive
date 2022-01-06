@@ -4,30 +4,38 @@ import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
 
 function App() {
-  const [pageData, setPageData] = useState([]);
-  const [fileMenuToggle, setFileMenuToggle] = useState(false);
-  const [createFolderModal, setCreateFolderModal] = useState(false);
+  //Drive UI states
+  const [pageData, setPageData] = useState([]); //used to store the details of the folders/files which are to be displayed currently
+  const [fileMenuToggle, setFileMenuToggle] = useState(false); //To open or close the file menu
+  const [createFolderModal, setCreateFolderModal] = useState(false); //Open/Close create folder modal
 
-  const [notePad, setNotePad] = useState(false);
-  const [notePadSaveToggle, setNotePadSaveToggle] = useState(false);
+  //Notepad UI toggle states
+  const [notePad, setNotePad] = useState(false); //open/close notepad UI
+  const [notePadSaveToggle, setNotePadSaveToggle] = useState(false); //Display/Hide Save Button in notepad
 
-  const [currentBreadcrumbID, setBreadcrumbID] = useState('root');
+  //Breadcrumb states
+  const [currentBreadcrumbID, setBreadcrumbID] = useState('root'); //Stores currently selected folder's ID
   const [breadcrumbArr, setBreadcrumbArr] = useState([
     { name: 'My Drive', id: 'root' },
-  ]);
+  ]); //stores breadcrumb trail in an array
 
-  const [dummyState, setDummyState] = useState(true);
 
-  const [currNotepadData, setCurrNotepadData] = useState({})
-  const [retrieved, setRetrieved] = useState(false)
+  const [dummyState, setDummyState] = useState(true); //Used to re-render the page
+
+  //Notepad data states
+  const [currNotepadData, setCurrNotepadData] = useState({}) //To store data of the selected Notepad
+  const [retrieved, setRetrieved] = useState(false) //State to store whether a selected notepad's data has already been retrieved or not
   const [check_exist_notepad, set_check_exist_notepad] = useState(false)
   
-  const [isEditModalOpened,setIsEditModalOpened] = useState([false, '','',''])
-  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState([false, '','','']);
+  //Edit and Delete modal states
+  const [isEditModalOpened,setIsEditModalOpened] = useState([false, '','','']) //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState([false, '','','']); //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
 
-  const [searchQuery, setSearchQuery] = useState('')
+  //Search box state
+  const [searchQuery, setSearchQuery] = useState('') //will store the search query
 
   useEffect(async () => {
+    //send GET request with selected folder to retrieve it's data
     async function fetchPageData() {
       try {
         const getData = await axios.get('http://localhost:5000/', {
@@ -42,11 +50,10 @@ function App() {
     }
 
     let data = await fetchPageData();
-    let sortedData = await sortPageData(data);
+    let sortedData = await sortPageData(data); //sort the data in reverse chronological order
     // console.log(sortedData);
 
-    function searched(elem) {
-      // console.log(elem ,searchQuery);
+    function searched(elem) { //filter out data according to search query
       if(elem.file_name && elem.file_name.includes(searchQuery)){
         return elem;
       }
@@ -57,14 +64,16 @@ function App() {
     }
 
     setPageData(sortedData.filter(searched));
-    // console.log(pageData);
-    // console.log(currentBreadcrumbID,sortedData);
+    
   }, [dummyState]);
 
-  let notePadSaveBtnToggle = () => {
+  //Display/Hide notepad save button
+  let notePadSaveBtnToggle = () => { 
     console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
   };
+
+  //Open/Close notepad UI
   let NotepadToggle = () => {
     setNotePad(!notePad);
     closeFileMenu();
@@ -72,20 +81,24 @@ function App() {
     setRetrieved(false);
   };
 
+  //Open modal used to create a new folder
   let openCreateFolderModal = () => {
     setCreateFolderModal(true);
     closeFileMenu();
   };
 
+  //Close modal used to create a new folder
   let closeCreateFolderModal = () => {
     setCreateFolderModal(false);
     setDummyState(!dummyState);
   };
 
+  //Open file menu
   let fileMenuToggleFn = () => {
     setFileMenuToggle(true);
   };
 
+  //Close file menu
   let closeFileMenu = () => {
     setFileMenuToggle(false);
   };
@@ -104,7 +117,6 @@ function App() {
     let data = await sortIt(pageData);
 
     data = data.sort(function (a, b) {
-      // console.log(b.creation_date -  a.creation_date);
       return b.creation_date - a.creation_date;
     });
 

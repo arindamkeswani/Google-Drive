@@ -7,7 +7,7 @@ import DataContext from './DataContext';
 function DriveHeader() {
   let driveData = useContext(DataContext);
 
-  let search_box_input = React.createRef();
+  let search_box_input = React.createRef(); //reference to the search bar. So that it can be emptied using the 'X' button
   return (
     <>
       <div class='header-container'>
@@ -19,10 +19,10 @@ function DriveHeader() {
             <div class='inputBox'
 
               onChange={(event) => {
-                // console.log(event.target.value);
-                driveData.setSearchQuery(event.target.value)
-                driveData.setDummyState(!driveData.dummyState)
-                // console.log(driveData.searchQuery);
+                
+                driveData.setSearchQuery(event.target.value) //set the search query to filter data accordingly
+                driveData.setDummyState(!driveData.dummyState) //re-render the page with filtered data
+                
               }}>
               <input type='text' id='searchBar' placeholder='Search' 
               ref={search_box_input}/>

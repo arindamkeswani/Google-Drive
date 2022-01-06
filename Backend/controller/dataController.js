@@ -17,10 +17,8 @@ const moment = require("moment");
 
 
 //get root data
+
 exports.view = (req, res) => {
-    // res.render('home');
-
-
     //Connect to DB
     pool.getConnection((err, connection) => {
         if (err)
@@ -30,15 +28,17 @@ exports.view = (req, res) => {
 
         // use the connection
         parent_folder = req.query.current_folder
+
+        //query to get contents of the current folder
         connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?; SELECT * FROM notepads where user_id=1 AND parent_folder=?', [parent_folder, parent_folder], (err, rows) => {
             //When done with the connection, release it
             connection.release();
 
-            if (!err) {
+            if (!err) {//Send response, which has data of the selected folder
                 res.send({
                     query_returned: rows
                 })
-                // console.log("Rows in folder:", rows);
+                
             } else {
                 console.log(err);
             }
@@ -47,26 +47,26 @@ exports.view = (req, res) => {
     })
 };
 
+//Save data in the DB
 exports.save = (req, res) => {
     pool.getConnection((err, connection) => {
         if (err)
             throw err; //not connected
 
         const uid = new ShortUniqueId()
-        // console.log(uid());
-        // console.log('Connected as ID (data controller Save in DB): ', connection.threadId);
 
         parent_folder = req.body.parent_folder;
         timestamp = Date.now()
         unique_id = uid()
 
+        //Case: New folder is being created
         if (req.body.folder_name) {
             connection.query('INSERT INTO folders (id, user_id, folder_name, parent_folder, creation_date) VALUES (?,?,?,?,?);', [unique_id, 1, req.body.folder_name, parent_folder, timestamp], (err, rows) => {
                 connection.release();
             })
         }
-        else if (req.body.file_name) {
-            if (req.body.ext == ".txt") {
+        else if (req.body.file_name) { //Case:New file is being created
+            if (req.body.ext == ".txt") { //If file is a notepad
 
                 fileName = req.body.file_name;
                 // console.log(fileName);
@@ -92,6 +92,7 @@ exports.save = (req, res) => {
     })
 }
 
+//Update existing data
 exports.update = (req, res) => {
     pool.getConnection((err, connection) => {
         if (err)
@@ -104,9 +105,9 @@ exports.update = (req, res) => {
         id = req.body.existing_id;
         console.log("Trying to update data with ID:", id);
 
-        if (req.body.file_name) {
-            if (req.body.ext) {
-                if (req.body.ext == ".txt") {
+        if (req.body.file_name) { //If data is a file
+            if (req.body.ext) { //If contents of a file are to be updated
+                if (req.body.ext == ".txt") { //Update text file data
 
                     fileName = req.body.file_name;
                     // console.log(fileName);
@@ -131,19 +132,19 @@ exports.update = (req, res) => {
             }
 
         }
-        else {
-            //just rename it
+        else { //Case: File/Folder needs to be renamed
+            
             newName = req.body.name;
             fileType = req.body.file_type;
             console.log(newName, fileType);
-            if (fileType == "folder") {
+            if (fileType == "folder") { //if a folder needs to be renamed
                 connection.query('UPDATE folders SET folder_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
                     connection.release();
                 })
             }
-            else if (fileType == "notepad") {
+            else if (fileType == "notepad") { //if notpad needs to be renamed
                 connection.query('UPDATE notepads SET file_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
@@ -156,15 +157,15 @@ exports.update = (req, res) => {
     })
 }
 
-
+//Delete data
 exports.delete = (req, res) => {
     pool.getConnection((err, connection) => {
         if (err)
             throw err; //not connected
 
-
+        //Delete files using post-order traversal
         async function deleteFilesPostOrder(user_id, id, name) {
-            // console.log("Currently testing:", name);
+            
             connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;DELETE FROM notepads WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id], async (err, rows) => {
                 if (err)
                     throw err; //not connected
@@ -198,6 +199,7 @@ exports.delete = (req, res) => {
             })
         }
 
+        //Delete empty folders after all their files are deleted
         async function cleanUpFolders(user_id, id, name) {
             connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;', [user_id, id], async (err, rows) => {
                 if (err)
@@ -228,12 +230,12 @@ exports.delete = (req, res) => {
 
 
         //delete the appropriate data and its children, if any
-        console.log(req.body);
+        // console.log(req.body);
         id = req.body.existing_id;
         fileType = req.body.file_type;
         console.log("Trying to delete data with ID:", id, "and type:", fileType);
-        // DELETE FROM folders WHERE user_id=? AND parent_folder=?;
-        if (fileType == "folder") {
+        
+        if (fileType == "folder") { //Case: Folder needs to be deleted
             //delete the folder itself, all children folders, all children files
 
             connection.query('DELETE FROM folders WHERE id=? AND user_id=?;', [id, 1], (err, rows) => {
@@ -252,7 +254,7 @@ exports.delete = (req, res) => {
                 connection.release();
             })
         }
-        else if (fileType == "notepad") {
+        else if (fileType == "notepad") { //Case: Notepad needs to be deleted
             connection.query('DELETE FROM notepads WHERE user_id=? AND id=?;', [1, id], (err, rows) => {
                 if (err)
                     throw err; //not connected

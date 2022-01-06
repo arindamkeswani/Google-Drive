@@ -10,6 +10,7 @@ function DriveContent() {
   let folderDataArr = driveData.pageData;
   let breadcrumbArr = driveData.breadcrumbArr;
 
+  //Update the breadcrumb array and current breadcrumb ID (which represents the selected folder) on clicking a breadcrumb
   let update_arr_according_to_breadcrumb =(id, name) => {
     let currBreadcrumbFound = false
     // let newArr = breadcrumbArr.filter((e) => {

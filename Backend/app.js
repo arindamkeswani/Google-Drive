@@ -3,7 +3,7 @@ const app = express();
 var cors = require('cors');
 const mysql = require('mysql');
 
-require('dotenv').config();
+require('dotenv').config(); //may be used later
 
 // app.use(cors()) ;
 app.use(
@@ -50,6 +50,6 @@ app.listen(port,function(){
     console.log(`Server listening on port ${port}`); 
 });
 
-// app.use("/user",userRouter);
+//Importing the router to handle data manipulation
 const dataRouter = require('./Routers/dataRouter');
 app.use("/",dataRouter);

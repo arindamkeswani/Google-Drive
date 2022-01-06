@@ -7,10 +7,10 @@ import '../Modal/AddFolderModal.css'
 
 function AddFolderModal() {
  let dataDrive = useContext(DataContext);
-  const [folder_input_value,set_folder_input_value] = useState('')
+  const [folder_input_value,set_folder_input_value] = useState('') //stores folder name
   
 
- async function createFolder(){
+ async function createFolder(){ //send POST request to store new folder in the database
 
    await axios.post('http://localhost:5000/', {
      parent_folder: dataDrive.currentBreadcrumbID,
