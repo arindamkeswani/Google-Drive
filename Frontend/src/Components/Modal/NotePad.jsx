@@ -15,6 +15,14 @@ function NotePad() {
   let [fileName, setFolderName] = useState('');
 
 
+  // Toggle(to store Notepad Fullscreen data)
+  let [isFullscreen,setIsFullscreen] = useState(false)
+
+  let docModalRef = new React.createRef()
+
+
+
+
   //Notepad table has 11 columns, so the first condition will only run if we have retrieved the data of an existing file
   //This will help in avoiding overwriting data in the states.
   //The following block of code is used to retrieve data from the database and store it in states, which will then be displayed on the UI
@@ -100,7 +108,7 @@ function NotePad() {
 
   return (
     <>
-      <div id='docModal'>
+      <div id='docModal' ref={docModalRef}>
         <div class='docModal-header-bar'>
           <div class='docModal-headerBar-left'>
             <div class='docIcon'>
@@ -112,7 +120,21 @@ function NotePad() {
             {/* <!-- <div class="headerBar-right-iconDivBox minimize">
             <span class="material-icons-outlined"> remove </span>
           </div> --> */}
-            <div class='headerBar-right-iconDivBox fullscreen'>
+            <div
+              class='headerBar-right-iconDivBox fullscreen'
+              onClick={() => {
+                setIsFullscreen(!isFullscreen);
+                if (isFullscreen === true) {
+                  docModalRef.current.height ='100vh'
+                  docModalRef.current.width ='100vw'
+                } else {
+                   if (isFullscreen === true) {
+                     docModalRef.current.height = '';
+                     docModalRef.current.width = '';
+                   }
+                }
+              }}
+            >
               <span class='material-icons-outlined'> fullscreen </span>
             </div>
             <div
@@ -120,6 +142,11 @@ function NotePad() {
               onClick={() => {
                 driveData.NotepadToggle();
                 driveData.setCurrNotepadData({});
+                setIsFullscreen(false);
+                 if (isFullscreen === true) {
+                   docModalRef.current.height = '';
+                   docModalRef.current.width = '';
+                 }
                 driveData.setBreadcrumbID(
                   driveData.breadcrumbArr[driveData.breadcrumbArr.length - 1].id
                 );
@@ -165,8 +192,7 @@ function NotePad() {
                     if (driveData.check_exist_notepad == false) {
                       createNotepad();
                       driveData.NotepadToggle();
-                    }
-                    else {
+                    } else {
                       updateNotepad(driveData.currentBreadcrumbID);
                     }
                   }}
