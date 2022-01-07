@@ -12,6 +12,11 @@ function EditModal() {
       existing_id: elementDetails[1],
       name: newName,
       file_type: elementDetails[3]
+    }).then(function (response) {
+      console.log("Success");
+      console.log(response);
+    }).catch(function (error) {
+      console.log(error);
     });
   }
 
@@ -45,7 +50,11 @@ function EditModal() {
               onClick={() => {
                 renameElement(driveData.isEditModalOpened)
                 driveData.setIsEditModalOpened([false, '', '', '']);
-                driveData.setDummyState(!driveData.dummyState)
+                setTimeout(()=>{
+                  console.log("Timeout");
+                  driveData.setDummyState(!driveData.dummyState)
+                },2000)
+                // driveData.setDummyState(!driveData.dummyState)
               }}
             >
               OK

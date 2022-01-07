@@ -17,6 +17,8 @@ function FileMenu() {
       url: url,
       ext: "." + extension
     })
+
+
   }
 
   const readURL = file => {
@@ -82,30 +84,30 @@ function FileMenu() {
                     inputFileReference.current.click();
                     inputFileReference.current.addEventListener(
                       'change',
-                      async function(e) {
-                      e.stopPropagation();
-                      // do something (this works!)
-                      let file = e.target.files[0];
-                      let name = file.name.split(".")[0];
-                      let extension = file.name.split(".")[1];
+                      async function (e) {
+                        e.stopPropagation();
+                        // do something (this works!)
+                        let file = e.target.files[0];
+                        let name = file.name.split(".")[0];
+                        let extension = file.name.split(".")[1];
                         const url = await readURL(file);
-                        console.log(url.length);
-                      //URl-ImageBlob
-                      // console.log(url);
-                      console.log(saveMediaInDB(url, name, extension));
-                      //arbitrary timer to re-render page after uploading image
-                      setTimeout(()=>{
-                        console.log("Timeout");
-                        driveData.setDummyState(!driveData.dummyState)
-                      },1000)
-                    }
+                        // console.log(url);
+                        //URl-ImageBlob
+                        // console.log(url);
+                        console.log(saveMediaInDB(url, name, extension));
+                        //arbitrary timer to re-render page after uploading image
+                        setTimeout(() => {
+                          console.log("Timeout");
+                          driveData.setDummyState(!driveData.dummyState)
+                        }, 2000)
+                      }
                     );
                   }}
 
                 >
                   <input
                     ref={inputFileReference}
-                    // accept='image/png, image/jpeg'
+                    accept='image/png, image/jpeg, image/jpg'
                     id='icon-button-file'
                     type='file'
                     style={{ display: 'none' }}

@@ -44,7 +44,12 @@ function DeleteModal() {
                 driveData.setIsDeleteModalOpened(
                   [!driveData.isDeleteModalOpened[0], '', '', '']
                 );
-                driveData.setDummyState(!driveData.dummyState)
+                //arbitraru timer for re-rendering
+                setTimeout(()=>{
+                  console.log("Timeout");
+                  driveData.setDummyState(!driveData.dummyState)
+                },2000)
+                // driveData.setDummyState(!driveData.dummyState)
               }}
             >
               OK

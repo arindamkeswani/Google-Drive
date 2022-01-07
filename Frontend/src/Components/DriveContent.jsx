@@ -12,26 +12,26 @@ function DriveContent() {
   let breadcrumbArr = driveData.breadcrumbArr;
 
   //Update the breadcrumb array and current breadcrumb ID (which represents the selected folder) on clicking a breadcrumb
-  let update_arr_according_to_breadcrumb =(id, name) => {
+  let update_arr_according_to_breadcrumb = (id, name) => {
     let currBreadcrumbFound = false
-    
-    for(let i=breadcrumbArr.length-1; i>=0; i--){
-      if (currBreadcrumbFound==false) {
+
+    for (let i = breadcrumbArr.length - 1; i >= 0; i--) {
+      if (currBreadcrumbFound == false) {
         if (breadcrumbArr[i].id == id) {
           currBreadcrumbFound = true;
-        }else{
+        } else {
           breadcrumbArr.pop()
         }
-        
+
       }
-      else{
+      else {
         break;
       }
     }
 
     //Following statements need to be in order
     // console.log(driveData.breadcrumbArr);
-    driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length-1].id)
+    driveData.setBreadcrumbID(driveData.breadcrumbArr[driveData.breadcrumbArr.length - 1].id)
     // console.log(driveData.currentBreadcrumbID);
     driveData.setDummyState(!driveData.dummyState)
     // console.log(driveData.pageData);
@@ -65,18 +65,16 @@ function DriveContent() {
             {folderDataArr.map((ele) => {
 
               if (ele.folder_name) {
-                return <DriveFolderBox folderDataInObj={ele}/>;
+                return <DriveFolderBox folderDataInObj={ele} />;
               } else if (ele.file_name) {
                 if (ele.ext == '.txt') {
                   return <DocFileBox fileDataInObj={ele} />;
                 } else if (ele.ext == '.jpg' || ele.ext == '.png' || ele.ext == '.jpeg' || ele.ext == '.gif') {
                   return <ImageContainer fileDataInObj={ele} />
-                }else if (ele.ext = 'mp4') {
+                } else if (ele.ext = 'mp4') {
                   return <VideoContainer fileDataInObj={ele} />
                 }
-
-              } 
-
+              }
             })}
           </div>
         </div>

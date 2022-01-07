@@ -180,7 +180,7 @@ exports.update = (req, res) => {
                 connection.query('UPDATE media SET file_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
-
+                        
                     connection.release();
                 })
             }
