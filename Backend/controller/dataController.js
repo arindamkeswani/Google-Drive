@@ -166,7 +166,7 @@ exports.delete = (req, res) => {
         //Delete files using post-order traversal
         async function deleteFilesPostOrder(user_id, id, name) {
             
-            connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;DELETE FROM notepads WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id], async (err, rows) => {
+            connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;DELETE FROM notepads WHERE user_id=? AND parent_folder=?;DELETE FROM media WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id, user_id, id], async (err, rows) => {
                 if (err)
                     throw err; //not connected
 
@@ -256,6 +256,14 @@ exports.delete = (req, res) => {
         }
         else if (fileType == "notepad") { //Case: Notepad needs to be deleted
             connection.query('DELETE FROM notepads WHERE user_id=? AND id=?;', [1, id], (err, rows) => {
+                if (err)
+                    throw err; //not connected
+
+                connection.release();
+            })
+        }
+        else if (fileType == "media"){ //Case: Media (image or video needs to be deleted)
+            connection.query('DELETE FROM media WHERE user_id=? AND id=?;', [1, id], (err, rows) => {
                 if (err)
                     throw err; //not connected
 

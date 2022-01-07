@@ -8,6 +8,7 @@ import AddFolderModal from './Modal/AddFolderModal';
 import NotePad from './Modal/NotePad';
 import EditModal from './Modal/EditModal';
 import DeleteModal from './Modal/DeleteModal';
+import GalleryModal from './Modal/GalleryModal.jsx'
 
 
 function DriveBody() {
@@ -25,6 +26,8 @@ let driveData = useContext(DataContext);
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}
+      <GalleryModal/>
+      {console.log('a')}
     </>
   );
 }

@@ -16,7 +16,7 @@ function NotePad() {
 
 
   // Toggle(to store Notepad Fullscreen data)
-  let [isFullscreen,setIsFullscreen] = useState(false)
+  let [isFullscreen, setIsFullscreen] = useState(false)
 
   let docModalRef = new React.createRef()
 
@@ -125,13 +125,17 @@ function NotePad() {
               onClick={() => {
                 setIsFullscreen(!isFullscreen);
                 if (isFullscreen === true) {
-                  docModalRef.current.height ='100vh'
-                  docModalRef.current.width ='100vw'
+                  docModalRef.current.style.top='0rem'
+                  docModalRef.current.style.height = '100%'
+                  docModalRef.current.style.width = '100%'
+                  // console.log(docModalRef.current.style);
                 } else {
-                   if (isFullscreen === true) {
-                     docModalRef.current.height = '';
-                     docModalRef.current.width = '';
-                   }
+                  if (isFullscreen === false) {
+                    docModalRef.current.style.top='5rem'
+                    docModalRef.current.style.height = '';
+                    docModalRef.current.style.width = '';
+                    // console.log(docModalRef);
+                  }
                 }
               }}
             >
@@ -143,10 +147,11 @@ function NotePad() {
                 driveData.NotepadToggle();
                 driveData.setCurrNotepadData({});
                 setIsFullscreen(false);
-                 if (isFullscreen === true) {
-                   docModalRef.current.height = '';
-                   docModalRef.current.width = '';
-                 }
+                if (isFullscreen === true) {
+                  docModalRef.current.style.top='5rem'
+                  docModalRef.current.style.height = '';
+                  docModalRef.current.style.width = '';
+                }
                 driveData.setBreadcrumbID(
                   driveData.breadcrumbArr[driveData.breadcrumbArr.length - 1].id
                 );

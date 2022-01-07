@@ -34,6 +34,14 @@ function FileMenu() {
             </div>
             <div class='menuFile-Name'>Google Sheet</div>
           </div>
+          <div class='menu-multiple-box cameraGallery' >
+            <div class='menuIcon'>
+              <span class="material-icons">
+                image
+              </span>
+            </div>
+            <div class='menuFile-Name'>Gallery App</div>
+          </div>
         </div>
       </div>
     </>
