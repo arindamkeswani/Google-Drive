@@ -30,7 +30,7 @@ exports.view = (req, res) => {
         parent_folder = req.query.current_folder
 
         //query to get contents of the current folder
-        connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?; SELECT * FROM notepads where user_id=1 AND parent_folder=?', [parent_folder, parent_folder], (err, rows) => {
+        connection.query('SELECT * FROM folders where user_id=1 AND parent_folder=?; SELECT * FROM notepads where user_id=1 AND parent_folder=?; SELECT * FROM media where user_id=1 AND parent_folder=?', [parent_folder, parent_folder, parent_folder], (err, rows) => {
             //When done with the connection, release it
             connection.release();
 
@@ -88,6 +88,20 @@ exports.save = (req, res) => {
                     connection.release();
                 })
             }
+            //If file is an image/video/gif
+            if (req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".png" ||req.body.ext == ".mp4" || req.body.ext == ".gif"){
+                formatted_date=new Date().toDateString();
+                user_id=1;
+                url=req.body.url;
+                ext=req.body.ext;
+                fileName = req.body.file_name;
+                connection.query('INSERT INTO media (id, user_id, file_name, url, parent_folder, ext, formatted_date, creation_date) VALUES (?,?,?,?,?,?,?,?);', [unique_id, user_id, fileName, url, parent_folder, ext, formatted_date, timestamp], (err, rows) => {
+                    if (err)
+                        throw err; //not connected
+
+                    connection.release();
+                })
+            }
         }
     })
 }
@@ -129,6 +143,16 @@ exports.update = (req, res) => {
                         connection.release();
                     })
                 }
+                else if(req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".mp4"){
+                    //update
+                    newURL=req.body.url
+                    connection.query('UPDATE media SET url=? WHERE user_id=? AND id=?;', [newURL, 1, id], (err, rows) => {
+                        if (err)
+                            throw err; //not connected
+
+                        connection.release();
+                    })
+                }
             }
 
         }
@@ -137,15 +161,23 @@ exports.update = (req, res) => {
             newName = req.body.name;
             fileType = req.body.file_type;
             console.log(newName, fileType);
-            if (fileType == "folder") { //if a folder needs to be renamed
+            if (fileType == "folder") { //Case: if a folder needs to be renamed
                 connection.query('UPDATE folders SET folder_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
                     connection.release();
                 })
             }
-            else if (fileType == "notepad") { //if notpad needs to be renamed
+            else if (fileType == "notepad") { //Case: if notpad needs to be renamed
                 connection.query('UPDATE notepads SET file_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
+                    if (err)
+                        throw err; //not connected
+
+                    connection.release();
+                })
+            }
+            else if (fileType == "media"){//Case: if media needs to be renamed
+                connection.query('UPDATE media SET file_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
 
