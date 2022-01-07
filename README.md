@@ -48,10 +48,12 @@
     `id` varchar(10) NOT NULL,
     `user_id` int(11) NOT NULL DEFAULT 1,
     `file_name` varchar(50) NOT NULL,
-    `url` varchar(2000) NOT NULL,
+    `url` mediumtext NOT NULL,
     `parent_folder` varchar(10) NOT NULL,
     `ext` varchar(10) NOT NULL,
-    `creation_date` bigint(20) NOT NULL
+    `formatted_date` varchar(20) NOT NULL,
+    `creation_date` bigint(20) NOT NULL,
+    PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ```
     

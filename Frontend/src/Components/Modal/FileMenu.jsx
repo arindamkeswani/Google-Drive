@@ -1,12 +1,32 @@
-import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState, } from 'react';
 import DataContext from '../DataContext';
 import '../Modal/FileMenu.css';
 function FileMenu() {
   let driveData = useContext(DataContext);
   let [isGallerySubMenu, setIsGallerySubMenu] = useState(false);
- 
+  let [src, setSrc] = useState("")
   let inputFileReference = new React.createRef();
-let [src,setSrc]=useState("")
+
+
+  async function saveMediaInDB(url, fileName, extension) {
+    console.log(`Saving ${fileName} with extention ${extension} in DB`);
+    await axios.post('http://localhost:5000/', {
+      parent_folder: driveData.currentBreadcrumbID,
+      file_name: fileName,
+      url: url,
+      ext: "." + extension
+    });
+  }
+
+  const readURL = file => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = e => res(e.target.result);
+      reader.onerror = e => rej(e);
+      reader.readAsDataURL(file);
+    });
+  };
   return (
     <>
       <div class='menu-FileOption'>
@@ -56,31 +76,39 @@ let [src,setSrc]=useState("")
               <div className='gallerySubMenu'>
                 <div
                   className='g-textBox'
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     driveData.closeFileMenu();
+                    inputFileReference.current.click();
                     inputFileReference.current.addEventListener(
                       'change',
-                      function (e) {
-                        // do something (this works!)
-                        let imgFile = e.target.files[0];
-
-                        let url = URL.createObjectURL(imgFile);
-                        //URl-ImageBlob
-                        console.log(url);
-                      },
-                      false
+                      async function(e) {
+                      e.stopPropagation();
+                      // do something (this works!)
+                      let file = e.target.files[0];
+                      let name = file.name.split(".")[0];
+                      let extension = file.name.split(".")[1];
+                        const url = await readURL(file);
+                        console.log(url.length);
+                      //URl-ImageBlob
+                      // console.log(url);
+                      saveMediaInDB(url, name, extension)
+                    }
                     );
-                    inputFileReference.current.click();
                   }}
+
                 >
                   <input
                     ref={inputFileReference}
-                    accept='image/png, image/jpeg'
+                    // accept='image/png, image/jpeg'
                     id='icon-button-file'
                     type='file'
                     style={{ display: 'none' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                   />
-                  Upload Image
+                  Upload media
                 </div>
 
                 <div
@@ -97,7 +125,6 @@ let [src,setSrc]=useState("")
             )}
           </div>
         </div>
-      <img src={src} alt='imagef'/>
       </div>
     </>
   );

@@ -103,23 +103,7 @@ function GalleryModal() {
             </div>
             <div className='imageName'>Name Image</div>
           </div>
-          <div className='imgContainer'>
-            <div class='editBoxImg'>
-              <div>
-                <span class='material-icons-outlined editIcon'>edit</span>
-              </div>
-              <div>
-                <span class='material-icons-outlined deleteIcon'>close</span>
-              </div>
-            </div>
-            <div className='innerImg'>
-              <img
-                src='https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-                alt=''
-              />
-            </div>
-            <div className='imageName'>Name Image</div>
-          </div>
+          
         </div>
       </div>
     </>

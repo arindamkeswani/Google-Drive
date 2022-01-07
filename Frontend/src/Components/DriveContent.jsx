@@ -4,7 +4,8 @@ import DriveFolderBox from './FolderBox';
 import DataContext from './DataContext';
 import { useContext } from 'react';
 import DocFileBox from './DocFileBox';
-
+import VideoContainer from './VideoContainer'
+import ImageContainer from './ImageContainer'
 function DriveContent() {
   let driveData = useContext(DataContext);
   let folderDataArr = driveData.pageData;
@@ -13,16 +14,7 @@ function DriveContent() {
   //Update the breadcrumb array and current breadcrumb ID (which represents the selected folder) on clicking a breadcrumb
   let update_arr_according_to_breadcrumb =(id, name) => {
     let currBreadcrumbFound = false
-    // let newArr = breadcrumbArr.filter((e) => {
-    //   if (!currBreadcrumbFound) {
-    //     if (e.id == id) {
-    //       currBreadcrumbFound = true;
-    //     }
-    //     return e
-    //   }
-    // })
-    // let newArr=[]
-    // console.log(breadcrumbArr);
+    
     for(let i=breadcrumbArr.length-1; i>=0; i--){
       if (currBreadcrumbFound==false) {
         if (breadcrumbArr[i].id == id) {
@@ -71,13 +63,20 @@ function DriveContent() {
           <div class='folder-navigation'>Folder</div>
           <div class='inner-folder-container'>
             {folderDataArr.map((ele) => {
+
               if (ele.folder_name) {
-                return <DriveFolderBox folderDataInObj={ele} />;
+                return <DriveFolderBox folderDataInObj={ele}/>;
               } else if (ele.file_name) {
                 if (ele.ext == '.txt') {
                   return <DocFileBox fileDataInObj={ele} />;
+                } else if (ele.ext == '.jpg' || ele.ext == '.png' || ele.ext == '.jpeg' || ele.ext == '.gif') {
+                  return <ImageContainer fileDataInObj={ele} />
+                }else if (ele.ext = 'mp4') {
+                  return <VideoContainer fileDataInObj={ele} />
                 }
-              }
+
+              } 
+
             })}
           </div>
         </div>

@@ -1,0 +1,69 @@
+.mediaBox{
+ height: 8rem;
+  width: 8rem;
+  border: 2px solid red;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  overflow: hidden;
+  position: relative;
+}
+.mediaActualData{
+height: calc(100% - 2rem);
+ width: 100%;
+ /* border: 2px solid red; */
+ overflow: hidden;
+}
+.mediaActualData img{
+ height:100%;
+ width:100%;
+}
+
+.editBox-media{
+ position: absolute;
+  height: 1.8rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: transparent;
+  overflow: hidden;
+  padding-right: 0.3rem;
+}
+
+
+.editBox-media span {
+  height: 1.3rem;
+  width: 1.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  color: white;
+}
+.editBox-media div span:hover {
+ color:white;
+  font-size: 1rem;
+  background-color: #707478;
+  border-radius: 50%;
+}
+
+.mediaName {
+ position: absolute;
+  height: 2rem;
+  width: 100%;
+  color: #4e4e4e;
+  font-weight: 600;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    
+}
