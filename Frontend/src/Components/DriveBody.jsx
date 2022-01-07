@@ -8,26 +8,23 @@ import AddFolderModal from './Modal/AddFolderModal';
 import NotePad from './Modal/NotePad';
 import EditModal from './Modal/EditModal';
 import DeleteModal from './Modal/DeleteModal';
-import GalleryModal from './Modal/GalleryModal.jsx'
-
+import GalleryModal from './Modal/GalleryModal';
 
 function DriveBody() {
   //Toggle UI elements based on the following conditions
-let driveData = useContext(DataContext);
+  let driveData = useContext(DataContext);
   return (
     <>
       <div className='main-container'>
         <DriveHeader />
         <DriveContent />
       </div>
-      
-      {driveData.isDeleteModalOpened[0]&&<DeleteModal/>}
-      {driveData.isEditModalOpened[0]?<EditModal/>:''}
+      {driveData.isGallery ? <GalleryModal /> : ''}
+      {driveData.isDeleteModalOpened[0] && <DeleteModal />}
+      {driveData.isEditModalOpened[0] ? <EditModal /> : ''}
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}
-      <GalleryModal/>
-      {console.log('a')}
     </>
   );
 }

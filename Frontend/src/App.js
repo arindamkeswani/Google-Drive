@@ -34,6 +34,10 @@ function App() {
   //Search box state
   const [searchQuery, setSearchQuery] = useState('') //will store the search query
 
+  //Image Gallery Modal State
+  const [isGallery, setIsGallery] = useState(false)
+
+
   useEffect(async () => {
     //send GET request with selected folder to retrieve it's data
     async function fetchPageData() {
@@ -123,6 +127,11 @@ function App() {
     return await data;
   };
 
+  let toggleImageGallery = () => {
+    setIsGallery(!isGallery)
+        closeFileMenu();
+  }
+
   return (
     <>
       <DataContext.Provider
@@ -158,7 +167,10 @@ function App() {
           isDeleteModalOpened,
           setIsDeleteModalOpened,
           searchQuery,
-          setSearchQuery
+          setSearchQuery,
+          isGallery,
+          setIsGallery,
+          toggleImageGallery,
         }}
       >
         <DriveBody />
