@@ -16,7 +16,7 @@ function FileMenu() {
       file_name: fileName,
       url: url,
       ext: "." + extension
-    });
+    })
   }
 
   const readURL = file => {
@@ -92,7 +92,12 @@ function FileMenu() {
                         console.log(url.length);
                       //URl-ImageBlob
                       // console.log(url);
-                      saveMediaInDB(url, name, extension)
+                      console.log(saveMediaInDB(url, name, extension));
+                      //arbitrary timer to re-render page after uploading image
+                      setTimeout(()=>{
+                        console.log("Timeout");
+                        driveData.setDummyState(!driveData.dummyState)
+                      },1000)
                     }
                     );
                   }}
