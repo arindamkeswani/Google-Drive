@@ -1,8 +1,0 @@
-function FolderBox() {
- 
- return (
-  <>
-   
-  </>
- )
-}

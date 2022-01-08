@@ -14,6 +14,13 @@ function Drive_FolderBox(props) {
     driveData.setBreadcrumbArr([...driveData.breadcrumbArr, { name: name, id: id }])
     driveData.setDummyState(!driveData.dummyState)
   }
+
+  let truncate_name = (fileName)=>{
+    if(fileName.length<12){
+      return fileName
+    }
+    return fileName.substring(0,12)+"...";
+  }
   return (
     <>
       <div
@@ -59,7 +66,7 @@ function Drive_FolderBox(props) {
         >
           <span class='material-icons'> folder </span>
         </div>
-        <div class='folderName'>{folderData.folder_name}</div>
+        <div class='folderName'>{truncate_name(folderData.folder_name)}</div>
       </div>
     </>
   );

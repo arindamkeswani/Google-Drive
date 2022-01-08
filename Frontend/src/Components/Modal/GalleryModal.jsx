@@ -9,9 +9,10 @@ function GalleryModal() {
   let [isFullscreen, setIsFullscreen] = useState(false);
   let imgModalRef = new React.createRef();
   
-  const [mediaData, setMediaData] = useState([]) //store a user's photos
+  let [mediaData, setMediaData] = useState([]) //store a user's photos
   const [gallerySearchQuery, setGallerySearchQuery] = useState('') //will store the search query
-  // const [galleryDummyState, setDummyState] = useState(true); //Used to re-render the page
+  // const [currentDate, setCurrentDate] = useState(true); //Used to re-render the page
+
 
   useEffect(async () => {
     //send GET request with selected folder to retrieve it's data
@@ -33,44 +34,51 @@ function GalleryModal() {
 
     let data = await fetchPageData();
     let sortedData = await sortMediaData(data); //sort the data in reverse chronological order
-    console.log(data, sortedData);
+    await setMediaData(sortedData);
+    // function searched(elem) { //filter out data according to search query
+    //   if (elem.file_name && elem.file_name.includes(gallerySearchQuery)) {
+    //     return elem;
+    //   }
 
-    function searched(elem) { //filter out data according to search query
-      if (elem.file_name && elem.file_name.includes(gallerySearchQuery)) {
-        return elem;
-      }
+    //   if (elem.folder_name && elem.folder_name.includes(gallerySearchQuery)) {
+    //     return elem;
+    //   }
+    // }
 
-      if (elem.folder_name && elem.folder_name.includes(gallerySearchQuery)) {
-        return elem;
-      }
-    }
-
-    setMediaData(sortedData.filter(searched));
-
+    // setMediaData(sortedData.filter(searched));
+    // { console.log(mediaData) }
   }, [driveData.dummyState]);
   
 
   let sortMediaData = async (mediaData) => {
-    async function sortIt(mediaData) {
-      // console.log("Sorting up",mediaData.length);
-      // var rows = [];
-      // for (var i = 0; i < mediaData.length; i++) {
-      //   for (var j = 0; j < mediaData[i].length; j++) {
-      //     console.log(mediaData[i][j]);
-      //     rows.push(mediaData[i][j]);
-      //   }
-      // }
-      // console.log("Sorting",rows);
-      // return rows;
-    }
-    // let data = await sortIt(mediaData);
 
     var data = mediaData.sort(function (a, b) {
       
       return b.creation_date - a.creation_date;
     });
 
-    return await data;
+    var rows = [];
+    if(data){
+      var currentDate = data[0].formatted_date;
+      var currDateIdx=0;
+      
+      rows.push({date:currentDate, media:[data[0]]})
+      // console.log(data[0]);
+      for(let i=1; i<data.length; i++){
+        // console.log(data[i]);
+        if(data[i].formatted_date==currentDate){ //add in media array same object
+          rows[currDateIdx].media.push(data[i])
+        }else{
+          currentDate = data[i].formatted_date
+          rows.push({date:currentDate, media:[data[i]]})
+          currDateIdx+=1;
+        }
+      }
+    }
+
+    // console.log(rows);
+
+    return await rows;
   };
 
   return (
@@ -119,13 +127,25 @@ function GalleryModal() {
           </div>
         </div>
         <div className='galleryArea'>
+          {console.log(mediaData)}
            {mediaData.map((ele) => {
-
-              if (ele.file_name) {
-                if (ele.ext == '.jpg' || ele.ext == '.png' || ele.ext == '.jpeg' || ele.ext == '.gif') {
-                  return <ImageContainer fileDataInObj={ele} />
-                } 
+             
+             
+              if (ele) {
+                // if (ele.ext == '.jpg' || ele.ext == '.png' || ele.ext == '.jpeg' || ele.ext == '.gif') {
+                return (<>
+                    <div className='dateSection'>{ele.date}</div>
+                  <div className='dateWiseImageContainer'>
+                    {ele.media.map((image) => {
+                      return <ImageContainer fileDataInObj={image} />
+                    })}
+                  </div>
+                  
+                  </>)
+                // } 
               }
+
+             
             })}
         </div>
       </div>

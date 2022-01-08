@@ -20,6 +20,13 @@ function DocFileBox(props) {
     driveData.setBreadcrumbID(id)
   }
 
+  let truncate_name = (fileName)=>{
+    if(fileName.length<12){
+      return fileName
+    }
+    return fileName.substring(0,12)+"...";
+  }
+
   return (
     <>
       <div
@@ -64,7 +71,7 @@ function DocFileBox(props) {
         >
           <span class='material-icons'> description </span>
         </div>
-        <div class='folderName'>{fileData.file_name}</div>
+        <div class='folderName'>{truncate_name(fileData.file_name)}</div>
       </div>
     </>
   );

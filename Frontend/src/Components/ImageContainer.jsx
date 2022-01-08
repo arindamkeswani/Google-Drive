@@ -8,7 +8,12 @@ function ImageContainer(props) {
   let driveData = useContext(DataContext);
   let fileData = props.fileDataInObj
 
-
+  let truncate_name = (fileName)=>{
+    if(fileName.length<12){
+      return fileName
+    }
+    return fileName.substring(0,12)+"...";
+  }
   return (
     <>
 
@@ -49,7 +54,7 @@ function ImageContainer(props) {
             alt=''
           />
         </div>
-        <div className='mediaName'>{props.fileDataInObj.file_name}</div>
+        <div className='mediaName'>{ truncate_name(props.fileDataInObj.file_name)}</div>
       </div>
     </>
   )
