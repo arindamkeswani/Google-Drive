@@ -125,13 +125,13 @@ function NotePad() {
               onClick={() => {
                 setIsFullscreen(!isFullscreen);
                 if (isFullscreen === true) {
-                  docModalRef.current.style.top='0rem'
+                  docModalRef.current.style.top = '0rem'
                   docModalRef.current.style.height = '100%'
                   docModalRef.current.style.width = '100%'
                   // console.log(docModalRef.current.style);
                 } else {
                   if (isFullscreen === false) {
-                    docModalRef.current.style.top='5rem'
+                    docModalRef.current.style.top = '5rem'
                     docModalRef.current.style.height = '';
                     docModalRef.current.style.width = '';
                     // console.log(docModalRef);
@@ -148,7 +148,7 @@ function NotePad() {
                 driveData.setCurrNotepadData({});
                 setIsFullscreen(false);
                 if (isFullscreen === true) {
-                  docModalRef.current.style.top='5rem'
+                  docModalRef.current.style.top = '5rem'
                   docModalRef.current.style.height = '';
                   docModalRef.current.style.width = '';
                 }
@@ -197,6 +197,12 @@ function NotePad() {
                     if (driveData.check_exist_notepad == false) {
                       createNotepad();
                       driveData.NotepadToggle();
+                      driveData.setIsLoading(true)
+                      setTimeout(() => {
+                        console.log("Timeout");
+                        driveData.setIsLoading(false)
+                        driveData.setDummyState(!driveData.dummyState)
+                      }, 2000)
                     } else {
                       updateNotepad(driveData.currentBreadcrumbID);
                     }

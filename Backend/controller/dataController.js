@@ -113,7 +113,7 @@ exports.save = (req, res) => {
                 path = `Images/${user_id}/${unique_id}${ext}`
 
                 var imageBuffer  = decodeBase64Image(url);
-                console.log(imageBuffer);
+                // console.log(imageBuffer);
 
 
                 fs.writeFileSync(path,imageBuffer.data);

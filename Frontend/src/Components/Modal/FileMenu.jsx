@@ -102,10 +102,10 @@ function FileMenu() {
                         // console.log(url);
                         //URl-ImageBlob
                         // console.log(url);
-                        setTimeout(() => {
-                          console.log("image timeout");
-                          // driveData.setDummyState(!driveData.dummyState)
-                        }, 2000)
+                        // setTimeout(() => {
+                        //   console.log("image timeout");
+                        //   // driveData.setDummyState(!driveData.dummyState)
+                        // }, 2000)
 
                         console.log(saveMediaInDB(url, name, extension, file));
                         // saveMediaInFolder(file)

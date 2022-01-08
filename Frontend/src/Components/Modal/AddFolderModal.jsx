@@ -6,14 +6,14 @@ import '../Modal/AddFolderModal.css'
 
 
 function AddFolderModal() {
- let dataDrive = useContext(DataContext);
+ let driveData = useContext(DataContext);
   const [folder_input_value,set_folder_input_value] = useState('') //stores folder name
   
 
  async function createFolder(){ //send POST request to store new folder in the database
 
    await axios.post('http://localhost:5000/', {
-     parent_folder: dataDrive.currentBreadcrumbID,
+     parent_folder: driveData.currentBreadcrumbID,
      folder_name:folder_input_value
     });
  }
@@ -38,14 +38,21 @@ function AddFolderModal() {
            <div
              class='cancel-btn'
              id='canceladdFolderModal'
-             onClick={dataDrive.closeCreateFolderModal}
+             onClick={driveData.closeCreateFolderModal}
            >
              Cancel
            </div>
            <div
              class='confirm-btn'
              id='createFolderBtn'
-             onClick={()=>{dataDrive.closeCreateFolderModal(); createFolder()}}
+             onClick={()=>{driveData.closeCreateFolderModal(); 
+              driveData.setIsLoading(true)
+              setTimeout(() => {
+                console.log("Timeout");
+                driveData.setIsLoading(false)
+                driveData.setDummyState(!driveData.dummyState)
+              }, 2000)
+              createFolder()}}
            >
              OK
            </div>
