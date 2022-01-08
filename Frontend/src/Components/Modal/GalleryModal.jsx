@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
-import DataContext from '../DataContext';
 
+import DataContext from '../DataContext';
+import ImageContainer from '../ImageContainer'
 import './GalleryModal.css';
 function GalleryModal() {
   let driveData = useContext(DataContext);
   let [isFullscreen, setIsFullscreen] = useState(false);
   let imgModalRef = new React.createRef();
+  let folderDataArr = driveData.pageData
+
   return (
     <>
       <div id='docModal' ref={imgModalRef}>
@@ -52,57 +55,16 @@ function GalleryModal() {
           </div>
         </div>
         <div className='galleryArea'>
-          <div className='imgContainer'>
-            <div class='editBoxImg'>
-              <div>
-                <span class='material-icons-outlined editIcon'>edit</span>
-              </div>
-              <div>
-                <span class='material-icons-outlined deleteIcon'>close</span>
-              </div>
-            </div>
-            <div className='innerImg'>
-              <img
-                src='https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-                alt=''
-              />
-            </div>
-            <div className='imageName'>Name Image</div>
-          </div>
-          <div className='imgContainer'>
-            <div class='editBoxImg'>
-              <div>
-                <span class='material-icons-outlined editIcon'>edit</span>
-              </div>
-              <div>
-                <span class='material-icons-outlined deleteIcon'>close</span>
-              </div>
-            </div>
-            <div className='innerImg'>
-              <img
-                src='https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-                alt=''
-              />
-            </div>
-            <div className='imageName'>Name Image</div>
-          </div>
-          <div className='imgContainer'>
-            <div class='editBoxImg'>
-              <div>
-                <span class='material-icons-outlined editIcon'>edit</span>
-              </div>
-              <div>
-                <span class='material-icons-outlined deleteIcon'>close</span>
-              </div>
-            </div>
-            <div className='innerImg'>
-              <img
-                src='https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-                alt=''
-              />
-            </div>
-            <div className='imageName'>Name Image</div>
-          </div>
+         
+           {folderDataArr.map((ele) => {
+
+              if (ele.file_name) {
+                if (ele.ext == '.jpg' || ele.ext == '.png' || ele.ext == '.jpeg' || ele.ext == '.gif') {
+                  return <ImageContainer fileDataInObj={ele} />
+                } 
+              }
+            })}
+        
           
         </div>
       </div>

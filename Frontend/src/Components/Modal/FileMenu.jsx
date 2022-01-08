@@ -5,21 +5,29 @@ import '../Modal/FileMenu.css';
 function FileMenu() {
   let driveData = useContext(DataContext);
   let [isGallerySubMenu, setIsGallerySubMenu] = useState(false);
-  let [src, setSrc] = useState("")
+  let [currentMediaFile, setCurrentMediaFile] = useState({})
   let inputFileReference = new React.createRef();
 
 
-  async function saveMediaInDB(url, fileName, extension) {
+  async function saveMediaInDB(url, fileName, extension, file) {
     console.log(`Saving ${fileName} with extention ${extension} in DB`);
+    
     await axios.post('http://localhost:5000/', {
       parent_folder: driveData.currentBreadcrumbID,
       file_name: fileName,
       url: url,
-      ext: "." + extension
+      ext: "." + extension,
     })
 
+    // await axios.post('http://localhost:5000/uploadMedia', file)
 
   }
+
+  // async function saveMediaInFolder(file){
+  //   console.log(`Saving file in folder`);
+  //   console.log(file);
+  //   await axios.post('http://localhost:5000/uploadMedia', file)
+  // }
 
   const readURL = file => {
     return new Promise((res, rej) => {
@@ -94,7 +102,13 @@ function FileMenu() {
                         // console.log(url);
                         //URl-ImageBlob
                         // console.log(url);
-                        console.log(saveMediaInDB(url, name, extension));
+                        setTimeout(() => {
+                          console.log("image timeout");
+                          // driveData.setDummyState(!driveData.dummyState)
+                        }, 2000)
+
+                        console.log(saveMediaInDB(url, name, extension, file));
+                        // saveMediaInFolder(file)
                         //arbitrary timer to re-render page after uploading image
                         setTimeout(() => {
                           console.log("Timeout");

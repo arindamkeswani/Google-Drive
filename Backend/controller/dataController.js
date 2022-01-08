@@ -2,21 +2,12 @@ const { query } = require('express');
 const mysql = require('mysql');
 const { pool } = require('../app')
 const ShortUniqueId = require('short-unique-id');
-const moment = require("moment");
+// const Buffer= require('buffer');
 
-//connection pool
-// const pool = mysql.createPool({
-//     connectionLimit: 100,
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "gdrive",
-//     port: 3306,
-//     multipleStatements: true
-// });
-
+const fs = require('fs');
 
 //get root data
+
 
 exports.view = (req, res) => {
     //Connect to DB
@@ -25,6 +16,12 @@ exports.view = (req, res) => {
             throw err; //not connected
         console.log('Connected as ID (data controller View DB ): ', connection.threadId);
 
+        function base64_encode(file) {
+            // read binary data
+            var bitmap = fs.readFileSync(file);
+            // convert binary data to base64 encoded string
+            return new Buffer.from(bitmap).toString('base64');
+        }
 
         // use the connection
         parent_folder = req.query.current_folder
@@ -38,7 +35,7 @@ exports.view = (req, res) => {
                 res.send({
                     query_returned: rows
                 })
-                
+
             } else {
                 console.log(err);
             }
@@ -52,6 +49,22 @@ exports.save = (req, res) => {
     pool.getConnection((err, connection) => {
         if (err)
             throw err; //not connected
+
+        function decodeBase64Image(dataString) 
+        {
+          var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+          var response = {};
+
+          if (matches.length !== 3) 
+          {
+            return new Error('Invalid input string');
+          }
+
+          response.type = matches[1];
+          response.data = new Buffer.from(matches[2], 'base64');
+
+          return response;
+        }
 
         const uid = new ShortUniqueId()
 
@@ -89,13 +102,24 @@ exports.save = (req, res) => {
                 })
             }
             //If file is an image/video/gif
-            if (req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".png" ||req.body.ext == ".mp4" || req.body.ext == ".gif"){
-                formatted_date=new Date().toDateString();
-                user_id=1;
-                url=req.body.url;
-                ext=req.body.ext;
+            if (req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".png" || req.body.ext == ".mp4" || req.body.ext == ".gif") {
+
+
+                formatted_date = new Date().toDateString();
+                user_id = 1;
+                url = req.body.url;
+                ext = req.body.ext;
                 fileName = req.body.file_name;
-                connection.query('INSERT INTO media (id, user_id, file_name, url, parent_folder, ext, formatted_date, creation_date) VALUES (?,?,?,?,?,?,?,?);', [unique_id, user_id, fileName, url, parent_folder, ext, formatted_date, timestamp], (err, rows) => {
+                path = `Images/${user_id}/${unique_id}${ext}`
+
+                var imageBuffer  = decodeBase64Image(url);
+                console.log(imageBuffer);
+
+
+                fs.writeFileSync(path,imageBuffer.data);
+
+
+                connection.query('INSERT INTO media (id, user_id, file_name, url, parent_folder, ext, formatted_date, creation_date) VALUES (?,?,?,?,?,?,?,?);', [unique_id, user_id, fileName, path, parent_folder, ext, formatted_date, timestamp], (err, rows) => {
                     if (err)
                         throw err; //not connected
 
@@ -143,9 +167,9 @@ exports.update = (req, res) => {
                         connection.release();
                     })
                 }
-                else if(req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".mp4"){
+                else if (req.body.ext == ".jpg" || req.body.ext == ".jpeg" || req.body.ext == ".mp4") {
                     //update
-                    newURL=req.body.url
+                    newURL = req.body.url
                     connection.query('UPDATE media SET url=? WHERE user_id=? AND id=?;', [newURL, 1, id], (err, rows) => {
                         if (err)
                             throw err; //not connected
@@ -157,7 +181,7 @@ exports.update = (req, res) => {
 
         }
         else { //Case: File/Folder needs to be renamed
-            
+
             newName = req.body.name;
             fileType = req.body.file_type;
             console.log(newName, fileType);
@@ -176,11 +200,11 @@ exports.update = (req, res) => {
                     connection.release();
                 })
             }
-            else if (fileType == "media"){//Case: if media needs to be renamed
+            else if (fileType == "media") {//Case: if media needs to be renamed
                 connection.query('UPDATE media SET file_name=? WHERE user_id=? AND id=?;', [newName, 1, id], (err, rows) => {
                     if (err)
                         throw err; //not connected
-                        
+
                     connection.release();
                 })
             }
@@ -197,7 +221,7 @@ exports.delete = (req, res) => {
 
         //Delete files using post-order traversal
         async function deleteFilesPostOrder(user_id, id, name) {
-            
+
             connection.query('SELECT * FROM folders WHERE user_id=? AND parent_folder=?;DELETE FROM notepads WHERE user_id=? AND parent_folder=?;DELETE FROM media WHERE user_id=? AND parent_folder=?;', [user_id, id, user_id, id, user_id, id], async (err, rows) => {
                 if (err)
                     throw err; //not connected
@@ -248,13 +272,13 @@ exports.delete = (req, res) => {
                 // return;
 
                 // Delete in post order
-                
-                    connection.query('DELETE FROM folders WHERE user_id=? AND id=?;', [user_id,id], async (err, rows) => {
-                        if (err)
-                            throw err;
-                        console.log("Deleted", name);
-                    })
-                
+
+                connection.query('DELETE FROM folders WHERE user_id=? AND id=?;', [user_id, id], async (err, rows) => {
+                    if (err)
+                        throw err;
+                    console.log("Deleted", name);
+                })
+
 
 
             })
@@ -266,7 +290,7 @@ exports.delete = (req, res) => {
         id = req.body.existing_id;
         fileType = req.body.file_type;
         console.log("Trying to delete data with ID:", id, "and type:", fileType);
-        
+
         if (fileType == "folder") { //Case: Folder needs to be deleted
             //delete the folder itself, all children folders, all children files
 
@@ -294,7 +318,7 @@ exports.delete = (req, res) => {
                 connection.release();
             })
         }
-        else if (fileType == "media"){ //Case: Media (image or video needs to be deleted)
+        else if (fileType == "media") { //Case: Media (image or video needs to be deleted)
             connection.query('DELETE FROM media WHERE user_id=? AND id=?;', [1, id], (err, rows) => {
                 if (err)
                     throw err; //not connected

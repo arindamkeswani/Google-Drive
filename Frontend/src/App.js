@@ -4,6 +4,9 @@ import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
 
 function App() {
+
+  // const [userName, setUserName] = useState('pepcoding')
+
   //Drive UI states
   const [pageData, setPageData] = useState([]); //used to store the details of the folders/files which are to be displayed currently
   const [fileMenuToggle, setFileMenuToggle] = useState(false); //To open or close the file menu
@@ -20,16 +23,17 @@ function App() {
   ]); //stores breadcrumb trail in an array
 
 
+
   const [dummyState, setDummyState] = useState(true); //Used to re-render the page
 
   //Notepad data states
   const [currNotepadData, setCurrNotepadData] = useState({}) //To store data of the selected Notepad
   const [retrieved, setRetrieved] = useState(false) //State to store whether a selected notepad's data has already been retrieved or not
   const [check_exist_notepad, set_check_exist_notepad] = useState(false)
-  
+
   //Edit and Delete modal states
-  const [isEditModalOpened,setIsEditModalOpened] = useState([false, '','','']) //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
-  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState([false, '','','']); //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
+  const [isEditModalOpened, setIsEditModalOpened] = useState([false, '', '', '']) //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState([false, '', '', '']); //[modal opened/closed, selected element's ID, selected element's name, selected element's file type]
 
   //Search box state
   const [searchQuery, setSearchQuery] = useState('') //will store the search query
@@ -53,26 +57,28 @@ function App() {
       }
     }
 
+
+
     let data = await fetchPageData();
     let sortedData = await sortPageData(data); //sort the data in reverse chronological order
     // console.log(sortedData);
 
     function searched(elem) { //filter out data according to search query
-      if(elem.file_name && elem.file_name.includes(searchQuery)){
+      if (elem.file_name && elem.file_name.includes(searchQuery)) {
         return elem;
       }
 
-      if(elem.folder_name && elem.folder_name.includes(searchQuery)){
+      if (elem.folder_name && elem.folder_name.includes(searchQuery)) {
         return elem;
       }
     }
 
     setPageData(sortedData.filter(searched));
-    
+
   }, [dummyState]);
 
   //Display/Hide notepad save button
-  let notePadSaveBtnToggle = () => { 
+  let notePadSaveBtnToggle = () => {
     console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
   };
@@ -129,7 +135,7 @@ function App() {
 
   let toggleImageGallery = () => {
     setIsGallery(!isGallery)
-        closeFileMenu();
+    closeFileMenu();
   }
 
   return (

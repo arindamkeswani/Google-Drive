@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 var cors = require('cors');
 const mysql = require('mysql');
-
+const path = require("path");
 require('dotenv').config(); //may be used later
 
 // app.use(cors()) ;
@@ -55,3 +55,6 @@ app.listen(port,function(){
 //Importing the router to handle data manipulation
 const dataRouter = require('./Routers/dataRouter');
 app.use("/",dataRouter);
+app.use('/', express.static(path.join(__dirname, '/')));
+// const mediaRouter = require('./controller/mediaController.js');
+// app.use("/uploadMedia",mediaRouter);
