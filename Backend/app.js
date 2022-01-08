@@ -55,6 +55,8 @@ app.listen(port,function(){
 //Importing the router to handle data manipulation
 const dataRouter = require('./Routers/dataRouter');
 app.use("/",dataRouter);
+
+const galleryRouter = require('./Routers/galleryRouter.js');
+app.use("/gallery",galleryRouter);
+
 app.use('/', express.static(path.join(__dirname, '/')));
-// const mediaRouter = require('./controller/mediaController.js');
-// app.use("/uploadMedia",mediaRouter);

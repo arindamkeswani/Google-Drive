@@ -9,6 +9,8 @@ function App() {
 
   //Drive UI states
   const [pageData, setPageData] = useState([]); //used to store the details of the folders/files which are to be displayed currently
+  // const [mediaData, setMediaData] = useState([])
+
   const [fileMenuToggle, setFileMenuToggle] = useState(false); //To open or close the file menu
   const [createFolderModal, setCreateFolderModal] = useState(false); //Open/Close create folder modal
 
