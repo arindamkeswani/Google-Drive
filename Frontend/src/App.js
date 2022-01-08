@@ -45,6 +45,9 @@ function App() {
   //Image Gallery Modal State
   const [isGallery, setIsGallery] = useState(false)
 
+  // Loading State
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(async () => {
     //send GET request with selected folder to retrieve it's data
@@ -145,54 +148,56 @@ function App() {
   return (
     <>
       {/* <Router> */}
-   
-          <DataContext.Provider
-            value={{
-              pageData,
-              setPageData,
-              fileMenuToggle,
-              fileMenuToggleFn,
-              closeFileMenu,
-              createFolderModal,
-              openCreateFolderModal,
-              closeCreateFolderModal,
-              notePadSaveBtnToggle,
-              notePad,
-              NotepadToggle,
-              notePadSaveToggle,
-              sortPageData,
-              currentBreadcrumbID,
-              setBreadcrumbID,
-              pageData,
-              breadcrumbArr,
-              setBreadcrumbArr,
-              dummyState,
-              setDummyState,
-              currNotepadData,
-              setCurrNotepadData,
-              retrieved,
-              setRetrieved,
-              check_exist_notepad,
-              set_check_exist_notepad,
-              isEditModalOpened,
-              setIsEditModalOpened,
-              isDeleteModalOpened,
-              setIsDeleteModalOpened,
-              searchQuery,
-              setSearchQuery,
-              isGallery,
-              setIsGallery,
-              toggleImageGallery,
-            }}
-          >
-              {/* <Route exact   path="/" > */}
-            <DriveBody />
-             {/* </Route> */}
-              {/* <Route exact  path="sqq"> */}
-              {/* <DrawImageModal /> */}
-             {/* </Route> */}
-          </DataContext.Provider>
-{/*    
+
+      <DataContext.Provider
+        value={{
+          pageData,
+          setPageData,
+          fileMenuToggle,
+          fileMenuToggleFn,
+          closeFileMenu,
+          createFolderModal,
+          openCreateFolderModal,
+          closeCreateFolderModal,
+          notePadSaveBtnToggle,
+          notePad,
+          NotepadToggle,
+          notePadSaveToggle,
+          sortPageData,
+          currentBreadcrumbID,
+          setBreadcrumbID,
+          pageData,
+          breadcrumbArr,
+          setBreadcrumbArr,
+          dummyState,
+          setDummyState,
+          currNotepadData,
+          setCurrNotepadData,
+          retrieved,
+          setRetrieved,
+          check_exist_notepad,
+          set_check_exist_notepad,
+          isEditModalOpened,
+          setIsEditModalOpened,
+          isDeleteModalOpened,
+          setIsDeleteModalOpened,
+          searchQuery,
+          setSearchQuery,
+          isGallery,
+          setIsGallery,
+          toggleImageGallery,
+          isLoading,
+          setIsLoading
+        }}
+      >
+        {/* <Route exact   path="/" > */}
+        <DriveBody />
+        {/* </Route> */}
+        {/* <Route exact  path="sqq"> */}
+        {/* <DrawImageModal /> */}
+        {/* </Route> */}
+      </DataContext.Provider>
+      {/*    
       </Router> */}
     </>
   );

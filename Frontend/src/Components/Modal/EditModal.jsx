@@ -7,7 +7,7 @@ function EditModal() {
   const [newName, setNewName] = useState('') //stores the data entered by the user in the input box
 
   let renameElement = async (elementDetails) => {//send PATCH request to rename the selected file/folder
-    
+
     await axios.patch('http://localhost:5000/', {
       existing_id: elementDetails[1],
       name: newName,
@@ -50,11 +50,12 @@ function EditModal() {
               onClick={() => {
                 renameElement(driveData.isEditModalOpened)
                 driveData.setIsEditModalOpened([false, '', '', '']);
-                setTimeout(()=>{
+                driveData.setIsLoading(true)
+                setTimeout(() => {
                   console.log("Timeout");
                   driveData.setDummyState(!driveData.dummyState)
-                },2000)
-                // driveData.setDummyState(!driveData.dummyState)
+                  driveData.setIsLoading(false)
+                }, 2000)
               }}
             >
               OK

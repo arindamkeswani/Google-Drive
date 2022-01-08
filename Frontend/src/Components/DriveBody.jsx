@@ -9,6 +9,8 @@ import NotePad from './Modal/NotePad';
 import EditModal from './Modal/EditModal';
 import DeleteModal from './Modal/DeleteModal';
 import GalleryModal from './Modal/GalleryModal';
+import LoadingModal from './Modal/LoadingModal';
+
 
 function DriveBody() {
   //Toggle UI elements based on the following conditions
@@ -25,6 +27,7 @@ function DriveBody() {
       {driveData.fileMenuToggle ? <FileMenu /> : ''}
       {driveData.createFolderModal ? <AddFolderModal /> : ''}
       {driveData.notePad ? <NotePad /> : ''}
+      {driveData.isLoading ? <LoadingModal/>:''}
     </>
   );
 }

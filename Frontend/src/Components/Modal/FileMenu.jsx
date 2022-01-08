@@ -110,10 +110,13 @@ function FileMenu() {
                         console.log(saveMediaInDB(url, name, extension, file));
                         // saveMediaInFolder(file)
                         //arbitrary timer to re-render page after uploading image
+                        driveData.setIsLoading(true)
                         setTimeout(() => {
                           console.log("Timeout");
                           driveData.setDummyState(!driveData.dummyState)
+                          driveData.setIsLoading(false)
                         }, 2000)
+                        
                       }
                     );
                   }}
