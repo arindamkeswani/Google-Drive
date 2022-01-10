@@ -8,4 +8,6 @@ router.post('/',dataController.save)
 router.patch('/',dataController.update)
 router.delete('/',dataController.delete)
 
+// router.get('/:id',dataController.getMedia)
+
 module.exports= router

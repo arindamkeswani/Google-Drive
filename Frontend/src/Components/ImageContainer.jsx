@@ -1,23 +1,20 @@
 import './MediaContainer.css'
 import { useContext } from 'react';
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DataContext from './DataContext';
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function ImageContainer(props) {
-
   let driveData = useContext(DataContext);
   let fileData = props.fileDataInObj
-
-  let truncate_name = (fileName)=>{
-    if(fileName.length<12){
+  let truncate_name = (fileName) => {
+    if (fileName.length < 12) {
       return fileName
     }
-    return fileName.substring(0,12)+"...";
+    return fileName.substring(0, 12) + "...";
   }
   return (
     <>
-
-
       <div className='mediaBox'>
         <div class='editBox-media'>
           <div onClick={() => {
@@ -38,7 +35,6 @@ function ImageContainer(props) {
             }>
             <span
               class='material-icons-outlined deleteIcon'
-
             >
               close
             </span>
@@ -46,17 +42,22 @@ function ImageContainer(props) {
         </div>
         <div
           class='mediaActualData'
-
+          onClick={() => {
+            driveData.setCurrentImageData(props.fileDataInObj)
+          }}
         >
-          <img
-
-            src={"http://localhost:5000/"+props.fileDataInObj.url}
-            alt=''
-          />
+        
+          <Link to='/gallery'>
+            <img
+              src={"http://localhost:5000/" + props.fileDataInObj.url}
+              alt=''
+            />
+          </Link>
+         
         </div>
-        <div className='mediaName'>{ truncate_name(props.fileDataInObj.file_name)}</div>
+        <div className='mediaName'>{truncate_name(props.fileDataInObj.file_name)}</div>
       </div>
     </>
   )
 }
-export default ImageContainer
+export default ImageContainer;

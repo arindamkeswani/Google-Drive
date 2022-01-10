@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
-// import DrawImageModal from './Modal/DrawImageModal.jsx'
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DrawImageModal from './Components/Modal/DrawImageModal.jsx'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 function App() {
 
   // const [userName, setUserName] = useState('pepcoding')
@@ -26,7 +26,7 @@ function App() {
     { name: 'My Drive', id: 'root' },
   ]); //stores breadcrumb trail in an array
 
-
+  let [currentImageData, setCurrentImageData] = useState({});
 
   const [dummyState, setDummyState] = useState(true); //Used to re-render the page
 
@@ -147,60 +147,64 @@ function App() {
 
   return (
     <>
-      {/* <Router> */}
+    
+        <DataContext.Provider
+          value={{
+            pageData,
+            setPageData,
+            fileMenuToggle,
+            fileMenuToggleFn,
+            closeFileMenu,
+            createFolderModal,
+            openCreateFolderModal,
+            closeCreateFolderModal,
+            notePadSaveBtnToggle,
+            notePad,
+            NotepadToggle,
+            notePadSaveToggle,
+            sortPageData,
+            currentBreadcrumbID,
+            setBreadcrumbID,
+            pageData,
+            breadcrumbArr,
+            setBreadcrumbArr,
+            dummyState,
+            setDummyState,
+            currNotepadData,
+            setCurrNotepadData,
+            retrieved,
+            setRetrieved,
+            check_exist_notepad,
+            set_check_exist_notepad,
+            isEditModalOpened,
+            setIsEditModalOpened,
+            isDeleteModalOpened,
+            setIsDeleteModalOpened,
+            searchQuery,
+            setSearchQuery,
+            isGallery,
+            setIsGallery,
+            toggleImageGallery,
+            isLoading,
+            setIsLoading,
+            currentImageData,
+            setCurrentImageData
+          }}
+        >
+          <Router>
+            <Routes>
+              <Route exact path='/' element={<DriveBody />}></Route>
+              {/* <Route path="/" render={() => <DrawImageModal name={'name'} />} />  */}
+              <Route path='/gallery' element={<DrawImageModal state={currentImageData} />}></Route>
 
-      <DataContext.Provider
-        value={{
-          pageData,
-          setPageData,
-          fileMenuToggle,
-          fileMenuToggleFn,
-          closeFileMenu,
-          createFolderModal,
-          openCreateFolderModal,
-          closeCreateFolderModal,
-          notePadSaveBtnToggle,
-          notePad,
-          NotepadToggle,
-          notePadSaveToggle,
-          sortPageData,
-          currentBreadcrumbID,
-          setBreadcrumbID,
-          pageData,
-          breadcrumbArr,
-          setBreadcrumbArr,
-          dummyState,
-          setDummyState,
-          currNotepadData,
-          setCurrNotepadData,
-          retrieved,
-          setRetrieved,
-          check_exist_notepad,
-          set_check_exist_notepad,
-          isEditModalOpened,
-          setIsEditModalOpened,
-          isDeleteModalOpened,
-          setIsDeleteModalOpened,
-          searchQuery,
-          setSearchQuery,
-          isGallery,
-          setIsGallery,
-          toggleImageGallery,
-          isLoading,
-          setIsLoading
-        }}
-      >
-        {/* <Route exact   path="/" > */}
-        <DriveBody />
-        {/* </Route> */}
-        {/* <Route exact  path="sqq"> */}
-        {/* <DrawImageModal /> */}
-        {/* </Route> */}
-      </DataContext.Provider>
-      {/*    
-      </Router> */}
-    </>
-  );
+
+            </Routes>
+          </Router>
+        </DataContext.Provider>
+
+
+      </>
+      );
 }
 
-export default App;
+      export default App;

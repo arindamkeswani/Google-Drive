@@ -6,6 +6,7 @@ import ImageContainer from '../ImageContainer'
 import './GalleryModal.css';
 function GalleryModal() {
   let driveData = useContext(DataContext);
+
   let [isFullscreen, setIsFullscreen] = useState(false);
   let imgModalRef = new React.createRef();
   

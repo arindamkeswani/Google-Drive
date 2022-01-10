@@ -96,7 +96,8 @@
 
     - 4.2: Clear search bar button   
 
-
+5. **Media**
+    - 5.1: Save Images in the database
         
 > ### How to run the application:
 

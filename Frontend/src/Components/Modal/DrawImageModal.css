@@ -1,0 +1,148 @@
+.mainDrawImageContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(32, 33, 36);
+}
+
+.draw-title-container {
+  height: 7vh;
+  position: absolute;
+
+  background-color: #f1f3f4;
+  border-radius: 0.5rem;
+  display: flex;
+  padding-left: 1rem;
+  padding-right: 2rem;
+  left: 50%;
+  top: 1rem;
+  transform: translate(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.draw-line {
+  height: 40%;
+  width: 2.5px;
+  background-color: #707478;
+  border-radius: 0.3rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.draw-box {
+  height: 65%;
+  width: 4rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(95, 99, 108);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+.draw-box-span {
+  height: 65%;
+  width: 2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-family: sans-serif;
+  color: rgb(95, 99, 108);
+  cursor: pointer;
+}
+
+.imageContainer {
+  position: absolute;
+  border: 2px solid red;
+/* height: 500px;
+width:820px; */
+  top: 50%;
+  left: 50%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+.imageContainer img {
+  height: 100%;
+  width: 100%;
+}
+
+.pen {
+  position: relative;
+}
+.penEditOption {
+  height: 9rem;
+  width: 6.5rem;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  top: 4.5rem;
+  right: 48%;
+  position: absolute;
+  background-color: rgb(241, 243, 244);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.optionLabel {
+  height: 2.2rem;
+  padding-left: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  color: #5f636c;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-bottom: 1px solid #dadce0;
+}
+
+.pen-width-option {
+  height: 2.2rem;
+  width: 100%;
+  border-bottom: 1px solid #dadce0;
+  display: flex;
+  padding-left: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.circle {
+  height: 1.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.low-width {
+  height: 0.8rem;
+  width: 0.8rem;
+  background-color: #5f636c;
+}
+.mid-width {
+  height: 1rem;
+  width: 1rem;
+  background-color: #5f636c;
+}
+.large-width {
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: #5f636c;
+}
+.red {
+  background-color: #ea4335;
+}
+.blue {
+  background-color: #4285f4;
+}
+
+.green {
+  background-color: #188038;
+}
