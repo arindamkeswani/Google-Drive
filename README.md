@@ -61,7 +61,7 @@
 > ### Current list of features:
 
 1. **Google Drive UI**
-    - 1.1: Display data in a Last-Created-First-Displayed fashion
+    - 1.1: Display data in a Last-Created-First-Displayed fashion (Reverse chronological display)
 
 2. **Folders**
     - 2.1: Create folders
@@ -97,7 +97,12 @@
     - 4.2: Clear search bar button   
 
 5. **Media**
-    - 5.1: Save Images in the database
+    - 5.1: CRUD on images in database
+
+6. **Gallery**
+    - 6.1: Gallery grid view sorted date-wise
+    - 6.2: Gallery carousel view
+
         
 > ### How to run the application:
 

@@ -43,8 +43,9 @@ function ImageContainer(props) {
         <div
           class='mediaActualData'
           onClick={() => {
-            driveData.setCurrentImageData(props.fileDataInObj)
+          
             driveData.WindowModalForImageCarousel();
+            driveData.setCurrentImageData(props.fileDataInObj)
           }}
         >
             <img

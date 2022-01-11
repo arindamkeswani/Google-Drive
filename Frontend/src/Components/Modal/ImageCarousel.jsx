@@ -3,19 +3,20 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import DataContext from "../DataContext";
 
-
 function ImageCarousel() {
   let driveData = useContext(DataContext);
   driveData.image = React.createRef();
-  
-  let [imgArr,setImgArr] = useState([])
+
+  let [imgArr, setImgArr] = useState([]);
+  let [currImageIdx, setCurrImageIdx] = useState(0);
 
   useEffect(async () => {
     async function fetchPageData() {
-        var ar = driveData.image.current.height / driveData.image.current.width;
-        driveData.image.current.style.height = 400 + "px";
-        driveData.image.current.style.width = ar * driveData.image.current.style.height + "px";
-        driveData.image.current.style.height += "px";
+      var ar = driveData.image.current.height / driveData.image.current.width;
+      driveData.image.current.style.height = 400 + "px";
+      driveData.image.current.style.width =
+        ar * driveData.image.current.style.height + "px";
+      driveData.image.current.style.height += "px";
       try {
         const getData = await axios.get("http://localhost:5000/gallery/", {
           params: {},
@@ -26,9 +27,24 @@ function ImageCarousel() {
         console.log(err);
       }
     }
+
+    async function getCurrImageIdx(sortedData) {
+      try {
+        for (let i = 0; i < sortedData.length; i++) {
+          if (driveData.currentImageData.id == sortedData[i].id) {
+            setCurrImageIdx(i);
+            break;
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     let data = await fetchPageData();
     let sortedData = await sortCarouselData(data);
-     setImgArr(sortedData);
+    getCurrImageIdx(sortedData);
+    setImgArr(sortedData);
   }, []);
 
   let sortCarouselData = async (pageData) => {
@@ -37,6 +53,24 @@ function ImageCarousel() {
     });
     return data;
   };
+
+  let showNextImage = async (imgArr) => {
+    console.log("Right", currImageIdx, imgArr);
+    if (currImageIdx < imgArr.length - 1) {
+      driveData.setCurrentImageData(imgArr[currImageIdx + 1]);
+      setCurrImageIdx(currImageIdx + 1)
+    }
+  };
+
+  let showPrevImage = async (imgArr) => {
+    console.log("Left", currImageIdx, imgArr);
+    if (currImageIdx > 0) {
+      driveData.setCurrentImageData(imgArr[currImageIdx - 1]);
+      setCurrImageIdx(currImageIdx - 1)
+    }
+  };
+
+  let show;
   return (
     <>
       <div className="imageCarousel-body">
@@ -56,11 +90,20 @@ function ImageCarousel() {
             );
           })}
         </div>
-        <div className="rightBtn">
-          <span class="material-icons-outlined">chevron_left</span>
+        <div
+          className="rightBtn"
+          onClick={() => {
+            showPrevImage(imgArr);
+          }}
+        >
+          <span class="material-icons-outlined" >
+chevron_left
+</span>
         </div>
-        <div className="leftBtn">
-          <span class="material-icons-outlined">navigate_next</span>
+        <div className="leftBtn" onClick={() => {
+            showNextImage(imgArr);
+          }}>
+          <span class="material-icons-outlined">chevron_right</span>
         </div>
       </div>
     </>

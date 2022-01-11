@@ -25,6 +25,7 @@
     justify-content: center;
     align-items: center;
     gap:0.5rem;
+    overflow-x: auto;
 }
 
 .imgDisplayBox {
@@ -51,6 +52,7 @@
  display: flex;
  justify-content: center;
  align-items: center;
+  cursor: pointer;
 }
 .rightBtn span{
  font-size:3rem;
@@ -67,6 +69,7 @@
  display: flex;
  justify-content: center;
  align-items: center;
+ cursor: pointer;
 }
 .leftBtn span{
  font-size:3rem;

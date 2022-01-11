@@ -28,6 +28,11 @@ function DriveBody() {
       ) : (
         " "
       )}
+      {driveData.isWindowModal.forGallery ? (
+        <WindowModal childElement={<GalleryModal />} childName="Gallery" />
+      ) : (
+        ""
+      )}
       {driveData.isWindowModal.forImageCarousel ? (
         <WindowModal
           childElement={<ImageCarousel />}
@@ -37,11 +42,6 @@ function DriveBody() {
         " "
       )}
 
-      {driveData.isWindowModal.forGallery ? (
-        <WindowModal childElement={<GalleryModal />} childName="Gallery" />
-      ) : (
-        ""
-      )}
       {driveData.isDeleteModalOpened[0] && <DeleteModal />}
       {driveData.isEditModalOpened[0] ? <EditModal /> : ""}
       {driveData.fileMenuToggle ? <FileMenu /> : ""}
