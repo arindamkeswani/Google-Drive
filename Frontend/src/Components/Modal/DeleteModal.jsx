@@ -4,9 +4,7 @@ import DataContext from '../DataContext';
 import axios from 'axios';
 function DeleteModal() {
   let driveData = useContext(DataContext);
-
   let deleteElement = async (elementDetails) => { //send DELETE request to remove the selected file/folder
-    
     await axios.delete('http://localhost:5000/', {
       data: {
         existing_id: elementDetails[1],

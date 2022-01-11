@@ -55,9 +55,9 @@ function FileMenu() {
           <div
             class='menu-multiple-box'
             onClick={() => {
-              driveData.NotepadToggle();
+              driveData.WindowModalForNotepad()
               driveData.set_check_exist_notepad(false);
-              // driveData.setCurrentNotepadDetails({})
+              driveData.closeFileMenu();
             }}
           >
             <div class='menuIcon'>
@@ -74,6 +74,7 @@ function FileMenu() {
           <div
             class='menu-multiple-box cameraGallery'
             onClick={() => {
+       
               setIsGallerySubMenu(!isGallerySubMenu);
             }}
           >
@@ -138,7 +139,8 @@ function FileMenu() {
                 <div
                   className='g-textBox'
                   onClick={() => {
-                    driveData.toggleImageGallery();
+                           driveData.WindowModalForGallery();
+                    //  driveData.toggleImageGallery();
                   }}
                 >
                   Open Gallery

@@ -22,7 +22,6 @@ function DriveContent() {
         } else {
           breadcrumbArr.pop()
         }
-
       }
       else {
         break;

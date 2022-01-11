@@ -17,10 +17,8 @@
 .docModal-header-bar {
   height: 2.5rem;
   width: 100%;
-
   display: flex;
   border-bottom: 2px solid #dee0e3;
-  
 }
 .docModal-header {
   height: 4rem;
@@ -145,7 +143,6 @@
 .docModal-headerBar-right {
   height: 100%;
   width: 8%;
-
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5rem;

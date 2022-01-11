@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import DataContext from './Components/DataContext.jsx';
 import DriveBody from './Components/DriveBody.jsx';
@@ -17,7 +17,6 @@ function App() {
   const [createFolderModal, setCreateFolderModal] = useState(false); //Open/Close create folder modal
 
   //Notepad UI toggle states
-  const [notePad, setNotePad] = useState(false); //open/close notepad UI
   const [notePadSaveToggle, setNotePadSaveToggle] = useState(false); //Display/Hide Save Button in notepad
 
   //Breadcrumb states
@@ -43,12 +42,19 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('') //will store the search query
 
   //Image Gallery Modal State
-  const [isGallery, setIsGallery] = useState(false)
+  const [isGallery, setIsGallery] = useState(true)
 
   // Loading State
-
   const [isLoading, setIsLoading] = useState(false)
 
+  // WindowModal State
+  let [isWindowModal, setIsWindowModal] = useState({
+    forNotepad: false,
+    forGallery: false,
+    forImageCarousel:false,
+  });
+  
+let  [imgRef,setImgRef] = useState()
   useEffect(async () => {
     //send GET request with selected folder to retrieve it's data
     async function fetchPageData() {
@@ -86,17 +92,49 @@ function App() {
 
   //Display/Hide notepad save button
   let notePadSaveBtnToggle = () => {
-    console.log(notePadSaveToggle);
     setNotePadSaveToggle(!notePadSaveToggle);
   };
 
   //Open/Close notepad UI
-  let NotepadToggle = () => {
-    setNotePad(!notePad);
-    closeFileMenu();
+
+  let WindowModalForNotepad = () => {
+    let newObj = isWindowModal.forNotepad
+         setIsWindowModal({forNotepad:!newObj,forGallery:isWindowModal.forGallery});
+         setDummyState(!dummyState);
+    setRetrieved(false);
+    closeFileMenu()
+  };
+  let WindowModalForGallery = () => {
+    let newObj = isWindowModal.forGallery;
+    setIsWindowModal({
+      forGallery: !newObj,
+      forNotepad: isWindowModal.forNotepad,
+      forImageCarousel: isWindowModal.forImageCarousel,
+    });
     setDummyState(!dummyState);
     setRetrieved(false);
+    closeFileMenu()
   };
+  let WindowModalForImageCarousel = () => {
+    let newObj = isWindowModal.forImageCarousel;
+    setIsWindowModal({
+      forImageCarousel: !newObj,
+      forNotepad: isWindowModal.forNotepad,
+      forGallery: isWindowModal.forGallery,
+    });
+    setDummyState(!dummyState);
+    setRetrieved(false);
+    closeFileMenu();
+  };
+
+    
+
+  // let toggleImageGallery = () => {
+  //   setIsGallery(!isGallery);
+  //   closeFileMenu();
+  // };
+
+
 
   //Open modal used to create a new folder
   let openCreateFolderModal = () => {
@@ -140,71 +178,71 @@ function App() {
     return await data;
   };
 
-  let toggleImageGallery = () => {
-    setIsGallery(!isGallery)
-    closeFileMenu();
-  }
 
   return (
     <>
-    
-        <DataContext.Provider
-          value={{
-            pageData,
-            setPageData,
-            fileMenuToggle,
-            fileMenuToggleFn,
-            closeFileMenu,
-            createFolderModal,
-            openCreateFolderModal,
-            closeCreateFolderModal,
-            notePadSaveBtnToggle,
-            notePad,
-            NotepadToggle,
-            notePadSaveToggle,
-            sortPageData,
-            currentBreadcrumbID,
-            setBreadcrumbID,
-            pageData,
-            breadcrumbArr,
-            setBreadcrumbArr,
-            dummyState,
-            setDummyState,
-            currNotepadData,
-            setCurrNotepadData,
-            retrieved,
-            setRetrieved,
-            check_exist_notepad,
-            set_check_exist_notepad,
-            isEditModalOpened,
-            setIsEditModalOpened,
-            isDeleteModalOpened,
-            setIsDeleteModalOpened,
-            searchQuery,
-            setSearchQuery,
-            isGallery,
-            setIsGallery,
-            toggleImageGallery,
-            isLoading,
-            setIsLoading,
-            currentImageData,
-            setCurrentImageData
-          }}
-        >
-          <Router>
-            <Routes>
-              <Route exact path='/' element={<DriveBody />}></Route>
-              {/* <Route path="/" render={() => <DrawImageModal name={'name'} />} />  */}
-              <Route path='/gallery' element={<DrawImageModal state={currentImageData} />}></Route>
-
-
-            </Routes>
-          </Router>
-        </DataContext.Provider>
-
-
-      </>
-      );
+      <DataContext.Provider
+        value={{
+          pageData,
+          setPageData,
+          fileMenuToggle,
+          fileMenuToggleFn,
+          closeFileMenu,
+          createFolderModal,
+          openCreateFolderModal,
+          closeCreateFolderModal,
+          notePadSaveBtnToggle,
+          notePadSaveToggle,
+          sortPageData,
+          currentBreadcrumbID,
+          setBreadcrumbID,
+          pageData,
+          breadcrumbArr,
+          setBreadcrumbArr,
+          dummyState,
+          setDummyState,
+          currNotepadData,
+          setCurrNotepadData,
+          retrieved,
+          setRetrieved,
+          check_exist_notepad,
+          set_check_exist_notepad,
+          isEditModalOpened,
+          setIsEditModalOpened,
+          isDeleteModalOpened,
+          setIsDeleteModalOpened,
+          searchQuery,
+          setSearchQuery,
+          isGallery,
+          setIsGallery,
+          // toggleImageGallery,
+          isLoading,
+          setIsLoading,
+          currentImageData,
+          setCurrentImageData,
+          isWindowModal,
+          setIsWindowModal,
+          WindowModalForNotepad,
+          WindowModalForGallery,
+          setNotePadSaveToggle,
+          WindowModalForImageCarousel,
+          imgRef,
+          setImgRef,
+        }}
+      >
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<DriveBody />}></Route>
+            {/* <Route path="/" render={() => <DrawImageModal name={'name'} />} />  */}
+            <Route
+              path="/gallery"
+              element={<DrawImageModal state={currentImageData} />}
+            ></Route>
+          </Routes>
+        </Router>
+      </DataContext.Provider>
+    </>
+  );
 }
 
       export default App;

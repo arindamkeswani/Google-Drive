@@ -10,6 +10,8 @@ import EditModal from './Modal/EditModal';
 import DeleteModal from './Modal/DeleteModal';
 import GalleryModal from './Modal/GalleryModal';
 import LoadingModal from './Modal/LoadingModal';
+import WindowModal from './Modal/WindowModal';
+import ImageCarousel from "./Modal/ImageCarousel";
 
 
 function DriveBody() {
@@ -17,17 +19,34 @@ function DriveBody() {
   let driveData = useContext(DataContext);
   return (
     <>
-      <div className='main-container'>
+      <div className="main-container">
         <DriveHeader />
         <DriveContent />
       </div>
-      {driveData.isGallery ? <GalleryModal /> : ''}
+      {driveData.isWindowModal.forNotepad ? (
+        <WindowModal childElement={<NotePad />} childName="Notepad" />
+      ) : (
+        " "
+      )}
+      {driveData.isWindowModal.forImageCarousel ? (
+        <WindowModal
+          childElement={<ImageCarousel />}
+          childName="Image Gallery"
+        />
+      ) : (
+        " "
+      )}
+
+      {driveData.isWindowModal.forGallery ? (
+        <WindowModal childElement={<GalleryModal />} childName="Gallery" />
+      ) : (
+        ""
+      )}
       {driveData.isDeleteModalOpened[0] && <DeleteModal />}
-      {driveData.isEditModalOpened[0] ? <EditModal /> : ''}
-      {driveData.fileMenuToggle ? <FileMenu /> : ''}
-      {driveData.createFolderModal ? <AddFolderModal /> : ''}
-      {driveData.notePad ? <NotePad /> : ''}
-      {driveData.isLoading ? <LoadingModal/>:''}
+      {driveData.isEditModalOpened[0] ? <EditModal /> : ""}
+      {driveData.fileMenuToggle ? <FileMenu /> : ""}
+      {driveData.createFolderModal ? <AddFolderModal /> : ""}
+      {driveData.isLoading ? <LoadingModal /> : ""}
     </>
   );
 }

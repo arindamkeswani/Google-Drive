@@ -44,16 +44,13 @@ function ImageContainer(props) {
           class='mediaActualData'
           onClick={() => {
             driveData.setCurrentImageData(props.fileDataInObj)
+            driveData.WindowModalForImageCarousel();
           }}
         >
-        
-          <Link to='/gallery'>
             <img
               src={"http://localhost:5000/" + props.fileDataInObj.url}
               alt=''
             />
-          </Link>
-         
         </div>
         <div className='mediaName'>{truncate_name(props.fileDataInObj.file_name)}</div>
       </div>

@@ -1,13 +1,6 @@
-.galleryContainer {
-  position: absolute;
- background-color: blue;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
 
-}
 .galleryArea{
- height:calc(100% - 2.5rem);
+ height:100%;
  width: 100%;
  padding: 1rem;
  gap: 1.5rem;
@@ -92,7 +85,7 @@ overflow: hidden;
 .dateSection{
   padding: 1rem;
   height:2rem;
-  width:100vw;
+  width:100%;
  border-top: 1px solid #dadce0;
  border-bottom: 1px solid #dadce0;
  display: flex;

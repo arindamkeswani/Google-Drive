@@ -4,7 +4,6 @@ function LoadingModal() {
   <div className="loadingContainer">
    <div class="loader"></div>
    Please wait...
-
   </div>
  </>)
 }

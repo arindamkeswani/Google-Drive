@@ -108,61 +108,7 @@ function NotePad() {
 
   return (
     <>
-      <div id='docModal' ref={docModalRef}>
-        <div class='docModal-header-bar'>
-          <div class='docModal-headerBar-left'>
-            <div class='docIcon'>
-              <span class='material-icons googleDocsIcon'> description </span>
-            </div>
-            <div class='docTextIcon'>Notepad</div>
-          </div>
-          <div class='docModal-headerBar-right'>
-            {/* <!-- <div class="headerBar-right-iconDivBox minimize">
-            <span class="material-icons-outlined"> remove </span>
-          </div> --> */}
-            <div
-              class='headerBar-right-iconDivBox fullscreen'
-              onClick={() => {
-                setIsFullscreen(!isFullscreen);
-                if (isFullscreen === true) {
-                  docModalRef.current.style.top = '0rem'
-                  docModalRef.current.style.height = '100%'
-                  docModalRef.current.style.width = '100%'
-                  // console.log(docModalRef.current.style);
-                } else {
-                  if (isFullscreen === false) {
-                    docModalRef.current.style.top = '5rem'
-                    docModalRef.current.style.height = '';
-                    docModalRef.current.style.width = '';
-                    // console.log(docModalRef);
-                  }
-                }
-              }}
-            >
-              <span class='material-icons-outlined'> fullscreen </span>
-            </div>
-            <div
-              class='headerBar-right-iconDivBox close'
-              onClick={() => {
-                driveData.NotepadToggle();
-                driveData.setCurrNotepadData({});
-                setIsFullscreen(false);
-                if (isFullscreen === true) {
-                  docModalRef.current.style.top = '5rem'
-                  docModalRef.current.style.height = '';
-                  docModalRef.current.style.width = '';
-                }
-                driveData.setBreadcrumbID(
-                  driveData.breadcrumbArr[driveData.breadcrumbArr.length - 1].id
-                );
-                driveData.setDummyState(!driveData.dummyState);
-                driveData.retrieved = false;
-              }}
-            >
-              <span class='material-icons-outlined cancel'> close </span>
-            </div>
-          </div>
-        </div>
+
         <div class='docModal-header'>
           <div class='headerIconDoc'>
             <span class='material-icons'> description </span>
@@ -193,10 +139,10 @@ function NotePad() {
                 <div
                   class='doc-saveButton'
                   onClick={() => {
+                    
                     // if the notepad is new, save it, otherwise update the data
                     if (driveData.check_exist_notepad == false) {
                       createNotepad();
-                      driveData.NotepadToggle();
                       driveData.setIsLoading(true)
                       setTimeout(() => {
                         console.log("Timeout");
@@ -206,6 +152,7 @@ function NotePad() {
                     } else {
                       updateNotepad(driveData.currentBreadcrumbID);
                     }
+                     driveData.setNotePadSaveToggle(false);
                   }}
                 >
                   {driveData.check_exist_notepad ? 'Update' : 'Save'}
@@ -285,7 +232,6 @@ function NotePad() {
             value={content}
           ></textarea>
         </div>
-      </div>
     </>
   );
 }
